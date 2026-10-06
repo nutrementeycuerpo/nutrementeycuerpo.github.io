@@ -1116,3 +1116,9 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 @media (prefers-reduced-transparency: reduce) {
   .cookie-banner { background: var(--forest-deep); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
+
+/* Foto del equipo: que se vean las tres personas */
+.manifesto-image img { object-position: 62% center; }
+@media (max-width: 900px) {
+  .manifesto-image { min-height: 0; aspect-ratio: 1160 / 900; }
+}

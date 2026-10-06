@@ -221,8 +221,8 @@ if (hasGsap && !reduceMotion) {
   // Parallax de la imagen
   gsap.fromTo(
     ".manifesto-image img",
-    { yPercent: -7, scale: 1.16 },
-    { yPercent: 7, scale: 1.16, ease: "none", scrollTrigger: { trigger: ".manifesto", start: "top bottom", end: "bottom top", scrub: true } },
+    { yPercent: -3, scale: 1.07 },
+    { yPercent: 3, scale: 1.07, ease: "none", scrollTrigger: { trigger: ".manifesto", start: "top bottom", end: "bottom top", scrub: true } },
   );
 
   // "Hablemos" se desliza
