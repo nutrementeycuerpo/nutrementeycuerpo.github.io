@@ -1466,3 +1466,12 @@ body:not(.menu-open) .topbar:not(.is-floating) :focus-visible { outline-color: v
 /* Foto horizontal de Alejandro: ocupa todo el ancho de la tarjeta, apoyada abajo */
 .story-flip .story-visual img { width: 124%; max-width: none; height: auto; justify-self: center; object-fit: contain; }
 @media (max-width: 760px) { .story-flip .story-visual img { width: 118%; } }
+/* Equipo: la foto entera cabe en la tarjeta (cuerpo completo, sin cortes abajo) */
+.story .story-visual { grid-template: 100% / 100%; }
+.story .story-visual img { width: 100%; height: 100%; max-width: none; min-height: 0; object-fit: contain; object-position: center bottom; }
+.story-flip .story-visual img { width: 124%; height: auto; max-height: 100%; }
+@media (max-width: 760px) {
+  .story-visual { height: min(118vw, 560px); }
+  .story-flip .story-visual { height: auto; aspect-ratio: 1 / 1; }
+  .story-flip .story-visual img { width: 118%; }
+}
