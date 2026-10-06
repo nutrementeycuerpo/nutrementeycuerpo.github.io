@@ -1260,3 +1260,60 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 @media (prefers-reduced-motion: reduce) {
   .hv-circle, .hv-label, .hv-orbit, .hv-core { opacity: 1 !important; transition: none !important; animation: none !important; }
 }
+
+/* =========================================================
+   Portada "Respira" (SVG): mente y cuerpo se funden, respiran
+   y se pueden jalar. Reemplaza los círculos de CSS.
+   ========================================================= */
+.hero-visual { right: 0; top: 7svh; width: min(52vw, 940px); height: 66svh; }
+.hv-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.hv-orbit { fill: none; stroke: rgba(255, 255, 255, .13); stroke-width: 1; transform-origin: 450px 290px; rotate: -10deg; opacity: 0; transition: opacity 1.6s ease 1.2s; }
+.hv-lens { fill: #fff; opacity: .5; mix-blend-mode: soft-light; pointer-events: none; }
+.hv-ball { opacity: 0; transition: opacity .8s ease; }
+.hero-visual.is-in .hv-ball, .hero-visual.is-in .hv-orbit { opacity: 1; }
+@media (pointer: fine) {
+  .hero-visual { pointer-events: none; }
+  .hv-ball { pointer-events: auto; cursor: grab; touch-action: none; }
+  .hero-visual.is-dragging .hv-ball { cursor: grabbing; }
+}
+
+/* El logo se dibuja en el punto donde se unen */
+.hv-logo { pointer-events: none; }
+.hv-logo path {
+  fill: transparent; stroke: var(--forest); stroke-width: 9;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+}
+.hero-visual.is-in .hv-logo path { animation: hvDraw 1.2s var(--ease-out) 1.6s forwards, hvFill .5s ease 2.6s forwards; }
+@keyframes hvDraw { to { stroke-dashoffset: 0; } }
+@keyframes hvFill { to { fill: var(--forest); stroke: transparent; } }
+
+.hv-word, .hv-sub { text-anchor: middle; fill: var(--forest); pointer-events: none; opacity: 0; transition: opacity 1s ease 1.4s; }
+.hv-word { font: 500 46px var(--display); letter-spacing: -.035em; }
+.hv-sub { font: 700 17px var(--text); }
+.hero-visual.is-in .hv-word { opacity: 1; }
+.hero-visual.is-in .hv-sub { opacity: .7; }
+
+/* Respiración guiada: una palabra a la vez, que aparece y se va despacio */
+.hv-breath {
+  text-anchor: middle; fill: rgba(255, 255, 255, .78);
+  font: 400 26px var(--display); letter-spacing: .02em;
+  opacity: 0; transition: opacity 1.4s ease; pointer-events: none;
+}
+.hv-breath.on { opacity: 1; }
+.hero-visual.is-still .hv-breath { display: none; }
+.hero-visual.is-still .hv-logo path { stroke-dashoffset: 0; fill: var(--forest); stroke: transparent; animation: none; }
+.hero-visual.is-still .hv-word, .hero-visual.is-still .hv-sub, .hero-visual.is-still .hv-ball, .hero-visual.is-still .hv-orbit { transition: none; }
+
+@media (max-width: 900px) {
+  .hero-visual { left: -8vw; right: auto; top: 76px; width: 116vw; height: 44svh; }
+}
+@media (max-width: 620px) {
+  .hero-visual { height: 40svh; }
+}
+/* El texto de la portada deja pasar el mouse a los círculos; solo sus enlaces lo atrapan */
+.hero-content { pointer-events: none; }
+.hero-content a, .hero-content button { pointer-events: auto; }
+.hv-breath { font-size: 28px; }
+@media (min-width: 901px) and (max-width: 1600px) {
+  .hero-visual { width: 46vw; top: 5svh; height: 60svh; }
+}

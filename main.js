@@ -548,11 +548,11 @@ if (cursor && finePointer && !reduceMotion) {
   requestAnimationFrame(follow);
 
   document.addEventListener("pointerover", (e) => {
-    const big = e.target.closest(".hs-panel");
+    const big = e.target.closest(".hs-panel, .hv-ball");
     const link = e.target.closest("a, button, summary, .chip");
     cursor.classList.toggle("is-big", !!big);
     cursor.classList.toggle("is-link", !big && !!link);
-    label.textContent = big ? "Agendar" : "";
+    label.textContent = !big ? "" : big.classList.contains("hv-ball") ? "Arrastra" : "Agendar";
   });
   document.addEventListener("pointerdown", () => cursor.classList.add("is-down"));
   document.addEventListener("pointerup", () => cursor.classList.remove("is-down"));
@@ -602,58 +602,150 @@ if (cursor && finePointer && !reduceMotion) {
 })();
 
 // =========================================================
-// Portada: mente y cuerpo se acercan al cargar y se funden al bajar
-// Todo sale del valor actual en cada cuadro, así nunca salta.
+// Portada "Respira": mente y cuerpo se funden, respiran contigo
+// y se pueden jalar (regresan con un resorte, desde donde estén).
 // =========================================================
 (() => {
-  const visual = document.querySelector(".hero-visual");
-  if (!visual) return;
-  const mente = visual.querySelector(".hv-mente");
-  const cuerpo = visual.querySelector(".hv-cuerpo");
-  const core = visual.querySelector(".hv-core");
-  const lMente = visual.querySelector(".hv-label-mente");
-  const lCuerpo = visual.querySelector(".hv-label-cuerpo");
+  const svg = document.querySelector(".hv-svg");
+  if (!svg) return;
+  const visual = svg.closest(".hero-visual");
   const heroEl = document.querySelector(".hero");
+  const $ = (sel) => svg.querySelector(sel);
+  const ballM = $(".hv-ball-mente"), ballC = $(".hv-ball-cuerpo");
+  const clipC = $(".hv-clip-c"), lens = $(".hv-lens"), logo = $(".hv-logo");
+  const wordM = $(".hv-word-mente"), subM = $(".hv-sub-mente");
+  const wordC = $(".hv-word-cuerpo"), subC = $(".hv-sub-cuerpo");
+  const inhale = $(".hv-in"), exhale = $(".hv-out");
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(pointer: fine)").matches;
+
+  const CX = 450, CY = 290, R = 170, D = 210; // centro, radio y separación en reposo
+  const IN = 4, OUT = 6;                        // respiración guiada: 4 s inhala, 6 s exhala
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+  // Cada círculo tiene un desplazamiento propio (arrastre) que vuelve a 0 con un resorte
+  const balls = [
+    { el: ballM, x: 0, y: 0, vx: 0, vy: 0, dragging: false, hist: [] },
+    { el: ballC, x: 0, y: 0, vx: 0, vy: 0, dragging: false, hist: [] },
+  ];
+  // Resorte tipo Apple: respuesta 0.45 s, amortiguación 0.8 (un poco de rebote porque lo lanzaste tú)
+  const omega = (2 * Math.PI) / 0.45, zeta = 0.8;
+
+  function place(sep, r, ptr) {
+    const mx = CX - sep / 2 + balls[0].x + ptr.x * 10, my = CY + balls[0].y + ptr.y * 8;
+    const cx = CX + sep / 2 + balls[1].x - ptr.x * 7, cy = CY + balls[1].y - ptr.y * 6;
+    for (const [el, x, y] of [[ballM, mx, my], [ballC, cx, cy], [clipC, mx, my], [lens, cx, cy]]) {
+      el.setAttribute("cx", x.toFixed(1));
+      el.setAttribute("cy", y.toFixed(1));
+      el.setAttribute("r", r.toFixed(1));
+    }
+    const midX = (mx + cx) / 2, midY = (my + cy) / 2;
+    logo.setAttribute("transform", `translate(${(midX - 37).toFixed(1)} ${(midY - 41).toFixed(1)}) scale(.28)`);
+    wordM.setAttribute("x", (mx - r * 0.36).toFixed(1)); wordM.setAttribute("y", (my + 6).toFixed(1));
+    subM.setAttribute("x", (mx - r * 0.36).toFixed(1)); subM.setAttribute("y", (my + 40).toFixed(1));
+    wordC.setAttribute("x", (cx + r * 0.36).toFixed(1)); wordC.setAttribute("y", (cy + 6).toFixed(1));
+    subC.setAttribute("x", (cx + r * 0.36).toFixed(1)); subC.setAttribute("y", (cy + 40).toFixed(1));
+  }
 
   if (still) {
-    visual.classList.add("is-in");
+    place(D, R, { x: 0, y: 0 });
+    visual.classList.add("is-in", "is-still");
     return;
   }
 
-  const start = performance.now() + (document.documentElement.classList.contains("is-loading") ? 1700 : 250);
-  const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+  const start = performance.now() + (document.documentElement.classList.contains("is-loading") ? 1700 : 300);
   const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
-  let visible = true;
+  let visible = true, last = performance.now();
+  place(900, R, ptr);
+  setTimeout(() => visual.classList.add("is-in"), Math.max(0, start - performance.now()));
+  new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(heroEl);
 
-  if (window.matchMedia("(pointer: fine)").matches) {
+  // Coordenadas del mouse dentro del dibujo
+  const toSvg = (e) => {
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  };
+
+  if (fine) {
     heroEl.addEventListener("pointermove", (e) => {
       ptr.tx = (e.clientX / window.innerWidth) * 2 - 1;
       ptr.ty = (e.clientY / window.innerHeight) * 2 - 1;
     });
     heroEl.addEventListener("pointerleave", () => (ptr.tx = ptr.ty = 0));
-  }
-  new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(heroEl);
-  setTimeout(() => visual.classList.add("is-in"), Math.max(0, start - performance.now()));
 
+    // resistencia progresiva: entre más lejos, menos te sigue (como una liga)
+    const band = (o) => (o * 260 * 0.55) / (260 + 0.55 * Math.abs(o));
+    balls.forEach((b) => {
+      b.el.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        b.el.setPointerCapture(e.pointerId);
+        const p = toSvg(e);
+        b.dragging = true;
+        b.grab = { x: p.x, y: p.y, ox: b.x, oy: b.y }; // respeta desde dónde lo agarraste
+        b.hist = [{ x: b.x, y: b.y, t: performance.now() }];
+        b.vx = b.vy = 0;
+        visual.classList.add("is-dragging");
+      });
+      b.el.addEventListener("pointermove", (e) => {
+        if (!b.dragging) return;
+        const p = toSvg(e);
+        b.x = band(b.grab.ox + p.x - b.grab.x);
+        b.y = band(b.grab.oy + p.y - b.grab.y);
+        const now = performance.now();
+        b.hist.push({ x: b.x, y: b.y, t: now });
+        while (b.hist.length > 2 && now - b.hist[0].t > 90) b.hist.shift();
+      });
+      const release = () => {
+        if (!b.dragging) return;
+        b.dragging = false;
+        const h = b.hist, a = h[0], z = h[h.length - 1], dt = Math.max(16, z.t - a.t) / 1000;
+        b.vx = (z.x - a.x) / dt; // la velocidad del gesto pasa al resorte: sin costura
+        b.vy = (z.y - a.y) / dt;
+        visual.classList.remove("is-dragging");
+      };
+      b.el.addEventListener("pointerup", release);
+      b.el.addEventListener("pointercancel", release);
+    });
+  }
+
+  let phaseShown = "";
   function frame(now) {
     requestAnimationFrame(frame);
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
     if (!visible) return;
-    const s = mente.offsetWidth;
-    const enter = easeOut(Math.min(1, Math.max(0, (now - start) / 1600)));
-    const p = Math.min(1, window.scrollY / (heroEl.offsetHeight * 0.8));
+
+    const t = (now - start) / 1000;
+    const enter = easeOut(Math.min(1, Math.max(0, t / 2)));
+    const p = Math.min(1, window.scrollY / (heroEl.offsetHeight * 0.75));
+
+    // Respiración: 0 → 1 al inhalar, 1 → 0 al exhalar; empieza cuando ya se unieron
+    const tb = Math.max(0, t - 2.2) % (IN + OUT);
+    const breath = t < 2.2 ? 0 : tb < IN ? ease(tb / IN) : 1 - ease((tb - IN) / OUT);
+    const phase = t < 2.2 || p > 0.3 ? "" : tb < IN ? "in" : "out";
+    if (phase !== phaseShown) {
+      phaseShown = phase;
+      inhale.classList.toggle("on", phase === "in");
+      exhale.classList.toggle("on", phase === "out");
+    }
+
     ptr.x += (ptr.tx - ptr.x) * 0.06;
     ptr.y += (ptr.ty - ptr.y) * 0.06;
+    for (const b of balls) {
+      if (b.dragging) continue;
+      b.vx += (-omega * omega * b.x - 2 * zeta * omega * b.vx) * dt;
+      b.vy += (-omega * omega * b.y - 2 * zeta * omega * b.vy) * dt;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+    }
 
-    const apart = (1 - enter) * s * 0.42; // al cargar vienen separados
-    const merge = p * s * 0.2;           // al bajar se funden más
-    const dx = apart - merge;
-    const tm = `${(-dx + ptr.x * 14).toFixed(1)}px ${(ptr.y * 10).toFixed(1)}px`;
-    const tc = `${(dx - ptr.x * 9).toFixed(1)}px ${(-ptr.y * 7).toFixed(1)}px`;
-    mente.style.translate = lMente.style.translate = tm;
-    cuerpo.style.translate = lCuerpo.style.translate = tc;
-    core.style.scale = (1 + p * 0.35).toFixed(3);
-    visual.style.opacity = (1 - p * 0.6).toFixed(3);
+    const sep = (900 - D) * (1 - enter) + D + breath * 26 - p * 170;
+    const r = R * (1 + breath * 0.05);
+    place(Math.max(20, sep), r, ptr);
+    visual.style.opacity = (1 - p * 0.7).toFixed(3);
   }
   requestAnimationFrame(frame);
 })();
