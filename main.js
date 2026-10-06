@@ -557,3 +557,46 @@ if (cursor && finePointer && !reduceMotion) {
   document.addEventListener("pointerdown", () => cursor.classList.add("is-down"));
   document.addEventListener("pointerup", () => cursor.classList.remove("is-down"));
 }
+
+// =========================================================
+// Aviso de cookies: el mapa de Google solo se carga si se acepta
+// =========================================================
+(() => {
+  const KEY = "nutre-cookies"; // "si" | "no"
+  const banner = document.querySelector(".cookie-banner");
+  const map = document.querySelector(".contact-map iframe");
+  const blocked = document.querySelector(".map-blocked");
+  const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
+  const save = (v) => { try { localStorage.setItem(KEY, v); } catch {} };
+
+  function apply(choice) {
+    const ok = choice === "si";
+    if (map) {
+      if (ok && !map.src) map.src = map.dataset.src;
+      if (!ok && map.src) map.removeAttribute("src");
+      map.hidden = !ok;
+    }
+    if (blocked) blocked.hidden = ok;
+  }
+  function show() {
+    if (!banner) return;
+    banner.hidden = false;
+    requestAnimationFrame(() => banner.classList.add("is-in"));
+  }
+  function hide() {
+    if (!banner) return;
+    banner.classList.remove("is-in");
+    setTimeout(() => (banner.hidden = true), 400);
+  }
+  function choose(v) {
+    save(v);
+    apply(v);
+    hide();
+  }
+
+  apply(read());
+  if (!read()) setTimeout(show, document.documentElement.classList.contains("is-loading") ? 2600 : 800);
+  document.querySelectorAll(".js-cookie-accept").forEach((b) => b.addEventListener("click", () => choose("si")));
+  document.querySelectorAll(".js-cookie-reject").forEach((b) => b.addEventListener("click", () => choose("no")));
+  document.querySelectorAll(".js-cookie-open").forEach((b) => b.addEventListener("click", show));
+})();

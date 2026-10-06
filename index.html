@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Nutre Mente & Cuerpo | Psicología y Nutrición en Puebla</title>
     <meta name="description" content="Consultorio de psicología y nutrición en Puebla. Terapia cognitivo conductual, ansiedad, depresión, nutrición clínica y control de peso con un enfoque humano y personalizado." />
-    <link rel="canonical" href="https://cesar2006fg.github.io/nutrementeycuerpo/" />
+    <link rel="canonical" href="https://nutrementeycuerpo.github.io/" />
     <meta name="theme-color" content="#123b34" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -15,7 +15,7 @@
     <meta property="og:locale" content="es_MX" />
     <meta property="og:title" content="Nutre Mente & Cuerpo | Psicología y Nutrición en Puebla" />
     <meta property="og:description" content="Bienestar físico y emocional desde un enfoque humano, profesional y profundamente personal." />
-    <meta property="og:image" content="https://cesar2006fg.github.io/nutrementeycuerpo/og-image.jpg" />
+    <meta property="og:image" content="https://nutrementeycuerpo.github.io/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -41,9 +41,9 @@
         "@type": "MedicalBusiness",
         "name": "Nutre Mente & Cuerpo",
         "description": "Consultorio de psicología y nutrición en Puebla.",
-        "image": "https://cesar2006fg.github.io/nutrementeycuerpo/og-image.jpg",
-        "logo": "https://cesar2006fg.github.io/nutrementeycuerpo/apple-touch-icon.png",
-        "url": "https://cesar2006fg.github.io/nutrementeycuerpo/",
+        "image": "https://nutrementeycuerpo.github.io/og-image.jpg",
+        "logo": "https://nutrementeycuerpo.github.io/apple-touch-icon.png",
+        "url": "https://nutrementeycuerpo.github.io/",
         "email": "nutrementeycuerpomx@gmail.com",
         "telephone": ["+52 221 376 0413", "+52 220 319 9662"],
         "address": {
@@ -393,12 +393,21 @@
             </div>
           </div>
           <div class="contact-map reveal">
+            <!-- El mapa de Google pone cookies: solo se carga si la persona las acepta (ver main.js) -->
             <iframe
               title="Ubicación de Nutre Mente & Cuerpo"
-              src="https://www.google.com/maps?q=Costa+Rica+46,+Geovillas+del+Sur,+Puebla,+Pue.&output=embed"
+              data-src="https://www.google.com/maps?q=Costa+Rica+46,+Geovillas+del+Sur,+Puebla,+Pue.&output=embed"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
+              hidden
             ></iframe>
+            <div class="map-blocked">
+              <p>El mapa de Google usa cookies. Puedes activarlo o abrir la ubicación directo en Google Maps.</p>
+              <div class="map-blocked-actions">
+                <button class="chip chip-cuerpo js-cookie-accept" type="button">Activar mapa</button>
+                <a class="chip chip-ambas" href="https://maps.app.goo.gl/hZ3XQi5hSb3tW3eY7" target="_blank" rel="noreferrer">Abrir en Google Maps</a>
+              </div>
+            </div>
           </div>
           <div class="contact-details">
             <a class="brand brand-light" href="#inicio" aria-label="Nutre Mente & Cuerpo, inicio">
@@ -426,10 +435,21 @@
           </p>
           <div class="legal">
             <span>© <span class="js-year">2026</span> Nutre Mente &amp; Cuerpo, Puebla, México</span>
-            <span class="legal-links"><a href="aviso-legal.html">Aviso legal</a><a href="aviso-de-privacidad.html">Aviso de privacidad</a></span>
+            <span class="legal-links"><a href="aviso-legal.html">Aviso legal</a><a href="aviso-de-privacidad.html">Aviso de privacidad</a><button class="js-cookie-open" type="button">Preferencias de cookies</button></span>
           </div>
         </section>
       </main>
+
+      <div class="cookie-banner" role="region" aria-label="Aviso de cookies" hidden>
+        <p>
+          Este sitio no usa cookies propias. Solo el mapa de Google Maps puede usarlas si lo activas.
+          <a href="aviso-de-privacidad.html">Más información</a>
+        </p>
+        <div class="cookie-actions">
+          <button class="cookie-btn cookie-reject js-cookie-reject" type="button">Rechazar</button>
+          <button class="cookie-btn cookie-accept js-cookie-accept" type="button">Aceptar</button>
+        </div>
+      </div>
 
       <a class="wa-float js-wa" href="#" target="_blank" rel="noreferrer" aria-label="Escríbenos por WhatsApp">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.44-9.43a9.38 9.38 0 0 1 9.43 9.44c0 5.2-4.24 9.43-9.44 9.43m8.03-17.46A11.28 11.28 0 0 0 12.05.72C5.8.72.7 5.8.7 12.06c0 2 .52 3.95 1.52 5.67L.6 23.62l6.03-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.34-5.09 11.35-11.35a11.28 11.28 0 0 0-3.32-8.03" /></svg>
