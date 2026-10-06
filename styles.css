@@ -1139,3 +1139,8 @@ body { font-size: 1.0625rem; line-height: 1.65; }
   .manifesto-content .manifesto-title, .manifesto-content > p, .manifesto-content .steps { grid-column: 1; grid-row: auto; }
   .manifesto-content > p { margin: 28px 0 44px; }
 }
+/* La foto se difumina hacia el verde del texto */
+.manifesto-image {
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
