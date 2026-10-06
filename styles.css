@@ -1463,3 +1463,6 @@ body:not(.menu-open) .topbar:not(.is-floating) :focus-visible { outline-color: v
 .footer-logo { display: block; width: 150px; }
 .footer-logo img { width: 100%; height: auto; }
 @media (max-width: 620px) { .footer-logo { width: 130px; } }
+/* Foto horizontal de Alejandro: ocupa todo el ancho de la tarjeta, apoyada abajo */
+.story-flip .story-visual img { width: 124%; max-width: none; height: auto; justify-self: center; object-fit: contain; }
+@media (max-width: 760px) { .story-flip .story-visual img { width: 118%; } }
