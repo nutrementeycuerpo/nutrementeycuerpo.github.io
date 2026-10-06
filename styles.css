@@ -1187,3 +1187,76 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 
 /* Pasos: el tercer número usa el agua en vez de blanco puro, para que los tres hablen el mismo idioma */
 .steps li:nth-child(3)::before { background: var(--paper); }
+
+/* =========================================================
+   Portada: mente + cuerpo (reemplaza la forma 3D)
+   Dos círculos que se acercan y se unen; el logo vive donde se tocan.
+   ========================================================= */
+.hero .hero-shade {
+  background: linear-gradient(90deg, rgba(12,14,32,.55) 0%, rgba(12,14,32,.12) 55%, transparent), linear-gradient(0deg, rgba(12,14,32,.55), transparent 45%);
+  pointer-events: none;
+}
+.hero-visual {
+  --s: min(25vw, 38svh);
+  position: absolute; z-index: 0; right: 0; top: 9svh;
+  width: min(50vw, 900px); height: 54svh;
+  pointer-events: none;
+}
+.hv-orbit {
+  position: absolute; left: 50%; top: 50%;
+  width: calc(var(--s) * 2.15); height: calc(var(--s) * 1.25);
+  translate: -50% -50%; rotate: -12deg;
+  border: 1px solid rgba(255, 255, 255, .14); border-radius: 50%;
+  opacity: 0; transition: opacity 1.6s ease .9s;
+}
+.hv-circle, .hv-label {
+  position: absolute; top: calc(50% - var(--s) / 2);
+  width: var(--s); aspect-ratio: 1; border-radius: 50%;
+}
+.hv-label {
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  color: var(--forest);
+  opacity: 0; transition: opacity 1s ease .5s;
+  will-change: translate;
+}
+.hv-label-mente { left: calc(50% - var(--s) * .85); align-items: flex-start; padding-left: 13%; }
+.hv-label-cuerpo { left: calc(50% - var(--s) * .15); align-items: flex-end; padding-right: 13%; text-align: right; }
+.hv-circle {
+  mix-blend-mode: screen;
+  opacity: 0; transition: opacity 1s ease;
+  will-change: translate, scale;
+}
+.hv-mente {
+  left: calc(50% - var(--s) * .85);
+  background: radial-gradient(circle at 32% 28%, #e4e2f3 0%, var(--mente) 46%, #a9a4d6 100%);
+}
+.hv-cuerpo {
+  left: calc(50% - var(--s) * .15);
+  background: radial-gradient(circle at 68% 28%, #dff1ed 0%, var(--cuerpo) 46%, #86c3b7 100%);
+}
+.hv-label span { font: 500 calc(var(--s) * .115)/1 var(--display); letter-spacing: -.035em; }
+.hv-label small { font-size: max(12px, calc(var(--s) * .042)); font-weight: 700; opacity: .72; }
+.hv-core {
+  position: absolute; left: 50%; top: 50%;
+  width: calc(var(--s) * .2); aspect-ratio: 1; margin: calc(var(--s) * -.1) 0 0 calc(var(--s) * -.1);
+  display: grid; place-items: center;
+  opacity: 0; transition: opacity .8s ease 1.1s;
+}
+.hv-core svg { width: 62%; fill: var(--forest); }
+.hero-visual.is-in .hv-circle, .hero-visual.is-in .hv-label, .hero-visual.is-in .hv-orbit, .hero-visual.is-in .hv-core { opacity: 1; }
+
+/* Respiración lenta y pequeña: transmite calma sin llamar la atención */
+.hero-visual.is-in .hv-mente { animation: hvBreathe 9s ease-in-out infinite alternate; }
+.hero-visual.is-in .hv-cuerpo { animation: hvBreathe 9s ease-in-out -4.5s infinite alternate; }
+@keyframes hvBreathe { from { scale: 1; } to { scale: 1.03; } }
+
+@media (max-width: 900px) {
+  .hero-visual { --s: min(50vw, 31svh); left: 0; right: 0; top: 84px; width: 100%; height: 40svh; }
+  .hero .hero-shade { background: linear-gradient(0deg, rgba(12,14,32,.8) 0%, rgba(12,14,32,.35) 45%, transparent 70%); }
+}
+@media (max-width: 620px) {
+  .hero-visual { --s: min(48vw, 29svh); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv-circle, .hv-label, .hv-orbit, .hv-core { opacity: 1 !important; transition: none !important; animation: none !important; }
+}

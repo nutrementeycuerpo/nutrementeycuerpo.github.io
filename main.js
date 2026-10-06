@@ -600,3 +600,60 @@ if (cursor && finePointer && !reduceMotion) {
   document.querySelectorAll(".js-cookie-reject").forEach((b) => b.addEventListener("click", () => choose("no")));
   document.querySelectorAll(".js-cookie-open").forEach((b) => b.addEventListener("click", show));
 })();
+
+// =========================================================
+// Portada: mente y cuerpo se acercan al cargar y se funden al bajar
+// Todo sale del valor actual en cada cuadro, así nunca salta.
+// =========================================================
+(() => {
+  const visual = document.querySelector(".hero-visual");
+  if (!visual) return;
+  const mente = visual.querySelector(".hv-mente");
+  const cuerpo = visual.querySelector(".hv-cuerpo");
+  const core = visual.querySelector(".hv-core");
+  const lMente = visual.querySelector(".hv-label-mente");
+  const lCuerpo = visual.querySelector(".hv-label-cuerpo");
+  const heroEl = document.querySelector(".hero");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (still) {
+    visual.classList.add("is-in");
+    return;
+  }
+
+  const start = performance.now() + (document.documentElement.classList.contains("is-loading") ? 1700 : 250);
+  const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+  const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
+  let visible = true;
+
+  if (window.matchMedia("(pointer: fine)").matches) {
+    heroEl.addEventListener("pointermove", (e) => {
+      ptr.tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ptr.ty = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+    heroEl.addEventListener("pointerleave", () => (ptr.tx = ptr.ty = 0));
+  }
+  new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(heroEl);
+  setTimeout(() => visual.classList.add("is-in"), Math.max(0, start - performance.now()));
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!visible) return;
+    const s = mente.offsetWidth;
+    const enter = easeOut(Math.min(1, Math.max(0, (now - start) / 1600)));
+    const p = Math.min(1, window.scrollY / (heroEl.offsetHeight * 0.8));
+    ptr.x += (ptr.tx - ptr.x) * 0.06;
+    ptr.y += (ptr.ty - ptr.y) * 0.06;
+
+    const apart = (1 - enter) * s * 0.42; // al cargar vienen separados
+    const merge = p * s * 0.2;           // al bajar se funden más
+    const dx = apart - merge;
+    const tm = `${(-dx + ptr.x * 14).toFixed(1)}px ${(ptr.y * 10).toFixed(1)}px`;
+    const tc = `${(dx - ptr.x * 9).toFixed(1)}px ${(-ptr.y * 7).toFixed(1)}px`;
+    mente.style.translate = lMente.style.translate = tm;
+    cuerpo.style.translate = lCuerpo.style.translate = tc;
+    core.style.scale = (1 + p * 0.35).toFixed(3);
+    visual.style.opacity = (1 - p * 0.6).toFixed(3);
+  }
+  requestAnimationFrame(frame);
+})();
