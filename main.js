@@ -602,6 +602,179 @@ if (cursor && finePointer && !reduceMotion) {
 })();
 
 // =========================================================
+// Vidrio de la portada (WebGL puro, sin librerías)
+// Los círculos se vuelven lentes que refractan "Nutre" en letras
+// gigantes y una cuadrícula técnica. Si no hay WebGL, devuelve null
+// y se queda la versión SVG.
+// =========================================================
+function initGlass(heroEl, svg) {
+  const canvas = document.createElement("canvas");
+  canvas.className = "hero-glass";
+  canvas.setAttribute("aria-hidden", "true");
+  let gl = null;
+  try {
+    gl = canvas.getContext("webgl", { antialias: false, alpha: false, preserveDrawingBuffer: false });
+  } catch (e) {}
+  if (!gl) return null;
+
+  const vs = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
+  const fs = `precision highp float;
+uniform vec2 uRes,uC1,uC2,uShift;uniform float uR1,uR2,uK,uFade,uPx;uniform sampler2D uMask;
+const vec3 G0=vec3(.227,.259,.447),G1=vec3(.149,.169,.302),G2=vec3(.114,.129,.251);
+const vec3 LAV=vec3(.80,.79,.90),PEA=vec3(.95,.77,.68),NAVY=vec3(.161,.180,.306);
+float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
+float sdf(vec2 p){return smin(length(p-uC1)-uR1,length(p-uC2)-uR2,uK);}
+vec3 mask(vec2 p){return texture2D(uMask,clamp((p+uShift)/uRes,0.,1.)).rgb;}
+void main(){
+  vec2 p=vec2(gl_FragCoord.x,uRes.y-gl_FragCoord.y);
+  float t0=length((p-vec2(.72,.42)*uRes)/uRes.x)*1.45;
+  vec3 col=mix(G0,G1,smoothstep(0.,.38,t0));col=mix(col,G2,smoothstep(.38,.8,t0));
+  vec3 m=mask(p);
+  col+=vec3(.92,.93,1.)*(m.r*.055+m.g*.03+m.b*.12);
+  float R=max(uR1,uR2);
+  float d=sdf(p);
+  float ds=sdf(p-vec2(0.,R*.12));
+  col*=1.-(1.-smoothstep(0.,R*.5,ds))*.38*uFade*step(0.,d);
+  if(d>3.*uPx){gl_FragColor=vec4(col,1.);return;}
+  vec2 g=vec2(sdf(p+vec2(1.,0.))-sdf(p-vec2(1.,0.)),sdf(p+vec2(0.,1.))-sdf(p-vec2(0.,1.)));
+  vec2 n=normalize(g+1e-6);
+  float t=clamp(-d/(R*.85),0.,1.);
+  float bend=pow(1.-t,2.);
+  vec2 off=-n*bend*R*.42;
+  vec3 lr=vec3(mask(p+off).r,mask(p+off*1.07).r,mask(p+off*1.14).r);
+  float gr=mask(p+off*1.04).g+mask(p+off*1.04).b;
+  float w=smoothstep(-.35,.35,(length(p-uC1)-length(p-uC2))/R);
+  vec3 glass=mix(LAV,PEA,w);
+  glass=mix(glass,NAVY,lr*.2+gr*.07);
+  float inBoth=step(length(p-uC1),uR1)*step(length(p-uC2),uR2);
+  glass=mix(glass,vec3(1.,.975,.965),inBoth*.3);
+  float e=1.-t;
+  vec3 N=normalize(vec3(n*e,sqrt(max(0.,1.-e*e))));
+  vec3 L=normalize(vec3(-.45,-.6,.75));
+  glass*=.88+.2*max(dot(N,L),0.);
+  glass+=pow(max(dot(reflect(-L,N),vec3(0.,0.,1.)),0.),36.)*.55;
+  glass+=pow(e,7.)*.32;
+  float a=(1.-smoothstep(-1.5*uPx,1.5*uPx,d))*uFade;
+  gl_FragColor=vec4(mix(col,glass,a),1.);
+}`;
+  const sh = (type, src) => {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+  };
+  const v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
+  if (!v || !f) return null;
+  const prog = gl.createProgram();
+  gl.attachShader(prog, v);
+  gl.attachShader(prog, f);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "a");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const U = {};
+  ["uRes", "uC1", "uC2", "uShift", "uR1", "uR2", "uK", "uFade", "uPx", "uMask"].forEach((n) => (U[n] = gl.getUniformLocation(prog, n)));
+
+  const tex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.uniform1i(U.uMask, 0);
+
+  const mc = document.createElement("canvas");
+  const mx = mc.getContext("2d");
+  let W = 0, H = 0, dpr = 1;
+
+  // Máscara: rojo = "Nutre" gigante, verde = cuadrícula, azul = cruces
+  function drawMask() {
+    mc.width = W;
+    mc.height = H;
+    mx.fillStyle = "#000";
+    mx.fillRect(0, 0, W, H);
+    mx.globalCompositeOperation = "lighter";
+    const step = Math.round(76 * dpr);
+    mx.strokeStyle = "rgb(0,255,0)";
+    mx.lineWidth = Math.max(1, dpr);
+    mx.beginPath();
+    for (let x = (W % step) / 2; x < W; x += step) { mx.moveTo(x + 0.5, 0); mx.lineTo(x + 0.5, H); }
+    for (let y = step * 0.5; y < H; y += step) { mx.moveTo(0, y + 0.5); mx.lineTo(W, y + 0.5); }
+    mx.stroke();
+    mx.strokeStyle = "rgb(0,0,255)";
+    mx.lineWidth = Math.max(1, dpr * 1.2);
+    mx.beginPath();
+    const arm = 5 * dpr;
+    for (let x = (W % step) / 2 + step * 2, i = 0; x < W; x += step * 3, i++) {
+      for (let y = step * 0.5 + step * (i % 2 ? 3 : 1); y < H; y += step * 4) {
+        mx.moveTo(x - arm, y); mx.lineTo(x + arm, y);
+        mx.moveTo(x, y - arm); mx.lineTo(x, y + arm);
+      }
+    }
+    mx.stroke();
+    // la palabra pasa justo por detrás de los círculos
+    const ctm = svg.getScreenCTM();
+    const hr = heroEl.getBoundingClientRect();
+    const cy = ctm ? (ctm.d * 290 + ctm.f - hr.top) * dpr : H * 0.35;
+    mx.fillStyle = "rgb(255,0,0)";
+    mx.textBaseline = "alphabetic";
+    let size = 100;
+    mx.font = `700 ${size}px "Bricolage Grotesque", system-ui, sans-serif`;
+    if ("letterSpacing" in mx) mx.letterSpacing = "-4px";
+    size = (100 * W * 0.96) / mx.measureText("Nutre").width;
+    mx.font = `700 ${size}px "Bricolage Grotesque", system-ui, sans-serif`;
+    if ("letterSpacing" in mx) mx.letterSpacing = `${-0.045 * size}px`;
+    const tw = mx.measureText("Nutre").width;
+    mx.fillText("Nutre", (W - tw) / 2, cy + size * 0.36);
+    mx.globalCompositeOperation = "source-over";
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, mc);
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 900 ? 1.5 : 1.75);
+    W = Math.round(heroEl.clientWidth * dpr);
+    H = Math.round(heroEl.clientHeight * dpr);
+    canvas.width = W;
+    canvas.height = H;
+    gl.viewport(0, 0, W, H);
+    drawMask();
+  }
+
+  heroEl.insertBefore(canvas, heroEl.firstChild);
+  resize();
+  window.addEventListener("resize", resize);
+  if (document.fonts && document.fonts.load) document.fonts.load('700 100px "Bricolage Grotesque"').then(drawMask, () => {});
+
+  return {
+    render(s, fade, shiftX, shiftY) {
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return;
+      const hr = heroEl.getBoundingClientRect();
+      const X = (x) => (ctm.a * x + ctm.e - hr.left) * dpr;
+      const Y = (y) => (ctm.d * y + ctm.f - hr.top) * dpr;
+      const r = s.r * ctm.a * dpr;
+      gl.uniform2f(U.uRes, W, H);
+      gl.uniform2f(U.uC1, X(s.mx), Y(s.my));
+      gl.uniform2f(U.uC2, X(s.cx), Y(s.cy));
+      gl.uniform1f(U.uR1, r);
+      gl.uniform1f(U.uR2, r);
+      gl.uniform1f(U.uK, r * 0.38);
+      gl.uniform1f(U.uFade, fade);
+      gl.uniform1f(U.uPx, dpr);
+      gl.uniform2f(U.uShift, shiftX * dpr, shiftY * dpr);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    },
+  };
+}
+
+// =========================================================
 // Portada "Respira": mente y cuerpo se funden, respiran contigo
 // y se pueden jalar (regresan con un resorte, desde donde estén).
 // =========================================================
@@ -631,6 +804,7 @@ if (cursor && finePointer && !reduceMotion) {
   ];
   // Resorte tipo Apple: respuesta 0.45 s, amortiguación 0.8 (un poco de rebote porque lo lanzaste tú)
   const omega = (2 * Math.PI) / 0.45, zeta = 0.8;
+  const st = { mx: 0, my: 0, cx: 0, cy: 0, r: R }; // última posición, la usa el vidrio
 
   function place(sep, r, ptr) {
     const mx = CX - sep / 2 + balls[0].x + ptr.x * 10, my = CY + balls[0].y + ptr.y * 8;
@@ -641,6 +815,7 @@ if (cursor && finePointer && !reduceMotion) {
       el.setAttribute("r", r.toFixed(1));
     }
     const midX = (mx + cx) / 2, midY = (my + cy) / 2;
+    st.mx = mx; st.my = my; st.cx = cx; st.cy = cy; st.r = r;
     logo.setAttribute("transform", `translate(${(midX - 37).toFixed(1)} ${(midY - 41).toFixed(1)}) scale(.28)`);
     wordM.setAttribute("x", (mx - r * 0.36).toFixed(1)); wordM.setAttribute("y", (my + 6).toFixed(1));
     subM.setAttribute("x", (mx - r * 0.36).toFixed(1)); subM.setAttribute("y", (my + 40).toFixed(1));
@@ -648,9 +823,25 @@ if (cursor && finePointer && !reduceMotion) {
     subC.setAttribute("x", (cx + r * 0.36).toFixed(1)); subC.setAttribute("y", (cy + 40).toFixed(1));
   }
 
+  const useGlass = () => {
+    const g = initGlass(heroEl, svg);
+    if (g) {
+      visual.classList.add("has-glass");
+      $(".hv-goo").removeAttribute("filter"); // el vidrio ya dibuja la unión líquida
+    }
+    return g;
+  };
+
   if (still) {
     place(D, R, { x: 0, y: 0 });
     visual.classList.add("is-in", "is-still");
+    const g = useGlass();
+    if (g) {
+      const draw = () => g.render(st, 1, 0, 0);
+      draw();
+      window.addEventListener("resize", draw);
+      if (document.fonts) document.fonts.ready.then(draw);
+    }
     return;
   }
 
@@ -658,6 +849,7 @@ if (cursor && finePointer && !reduceMotion) {
   const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
   let visible = true, last = performance.now();
   place(900, R, ptr);
+  const glass = useGlass();
   setTimeout(() => visual.classList.add("is-in"), Math.max(0, start - performance.now()));
   new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(heroEl);
 
@@ -746,6 +938,7 @@ if (cursor && finePointer && !reduceMotion) {
     const r = R * (1 + breath * 0.05);
     place(Math.max(20, sep), r, ptr);
     visual.style.opacity = (1 - p * 0.7).toFixed(3);
+    if (glass) glass.render(st, Math.min(1, Math.max(0, t / 0.9)) * (1 - p * 0.7), ptr.x * 18, ptr.y * 10 - window.scrollY * 0.25);
   }
   requestAnimationFrame(frame);
 })();

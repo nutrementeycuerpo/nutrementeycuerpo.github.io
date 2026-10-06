@@ -1317,3 +1317,9 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 @media (min-width: 901px) and (max-width: 1600px) {
   .hero-visual { width: 46vw; top: 5svh; height: 60svh; }
 }
+
+/* Vidrio WebGL: los círculos se vuelven lentes que refractan "Nutre" y la cuadrícula.
+   Los círculos SVG siguen ahí (invisibles) para poder arrastrarlos. */
+.hero-glass { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; }
+.hero-visual.has-glass .hv-goo, .hero-visual.has-glass .hv-lensg { opacity: 0; }
+.hero-visual.has-glass .hv-orbit { display: none; }
