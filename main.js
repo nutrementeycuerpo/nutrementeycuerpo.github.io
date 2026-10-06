@@ -620,8 +620,8 @@ function initGlass(heroEl, svg) {
   const vs = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
   const fs = `precision highp float;
 uniform vec2 uRes,uC1,uC2,uShift;uniform float uR1,uR2,uK,uFade,uPx;uniform sampler2D uMask;
-const vec3 G0=vec3(.227,.259,.447),G1=vec3(.149,.169,.302),G2=vec3(.114,.129,.251);
-const vec3 LAV=vec3(.80,.79,.90),PEA=vec3(.95,.77,.68),NAVY=vec3(.161,.180,.306);
+const vec3 G0=vec3(.086,.345,.659),G1=vec3(.043,.243,.522),G2=vec3(.020,.165,.361);
+const vec3 LAV=vec3(.80,.79,.90),PEA=vec3(.95,.77,.68),NAVY=vec3(.031,.255,.545);
 float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
 float sdf(vec2 p){return smin(length(p-uC1)-uR1,length(p-uC2)-uR2,uK);}
 vec3 mask(vec2 p){return texture2D(uMask,clamp((p+uShift)/uRes,0.,1.)).rgb;}

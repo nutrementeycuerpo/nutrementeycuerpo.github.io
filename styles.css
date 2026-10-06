@@ -13,15 +13,15 @@ button { appearance: button; }
 }
 
 :root {
-  --forest: #292e4e;
-  --forest-deep: #1d2140;
+  --forest: #08418b;
+  --forest-deep: #052a5c;
   --sage: #b9d7c4;
   --lime: #d8e9a7;
   --cream: #f2f0e9;
   --paper: #fbfaf6;
-  --ink: #1c2033;
-  --muted: #5a5f75;
-  --line: rgba(28, 32, 51, 0.18);
+  --ink: #0e1e3a;
+  --muted: #4f5d75;
+  --line: rgba(14, 30, 58, 0.18);
   font-family: var(--text);
   color: var(--ink);
   background: var(--paper);
@@ -79,7 +79,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--lime); outline-
 
 .hero { position: relative; height: 100svh; min-height: 720px; color: white; background: var(--forest-deep); }
 .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; animation: heroZoom 12s ease-out both; }
-.hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg,rgba(12,14,32,.72) 0%,rgba(12,14,32,.26) 55%,rgba(12,14,32,.18)),linear-gradient(0deg,rgba(12,14,32,.72),transparent 50%); }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg,rgba(2,16,40,.72) 0%,rgba(2,16,40,.26) 55%,rgba(2,16,40,.18)),linear-gradient(0deg,rgba(2,16,40,.72),transparent 50%); }
 .hero-content { position: relative; z-index: 2; width: 100%; height: 100%; padding: 190px 5vw 55px; display: flex; flex-direction: column; justify-content: flex-end; }
 .hero-kicker { margin-bottom: 26px; font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
 .hero-title { max-width: 1080px; font: 500 clamp(60px,8.5vw,126px)/.88 var(--display); letter-spacing: -.07em; }
@@ -269,7 +269,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--lime); outline-
 .legal a { text-decoration: underline; text-underline-offset: 3px; }
 .legal a:hover { color: var(--lime); }
 
-.wa-float { position: fixed; z-index: 35; right: 22px; bottom: 22px; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; color: var(--forest); background: var(--lime); box-shadow: 0 10px 30px rgba(20,23,48,.35); transition: transform .3s ease, opacity .3s ease; }
+.wa-float { position: fixed; z-index: 35; right: 22px; bottom: 22px; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; color: var(--forest); background: var(--lime); box-shadow: 0 10px 30px rgba(3,28,64,.35); transition: transform .3s ease, opacity .3s ease; }
 .wa-float svg { width: 28px; height: 28px; fill: currentColor; }
 .wa-float:hover { transform: scale(1.08); }
 .wa-float::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--lime); animation: waPulse 2.6s ease-out infinite; }
@@ -297,9 +297,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--lime); outline-
 }
 
 /* ---------- Hero 3D y animaciones ---------- */
-.hero { background: radial-gradient(ellipse at 72% 42%, #3a4272 0%, #262b4d 38%, var(--forest-deep) 75%); }
+.hero { background: radial-gradient(ellipse at 72% 42%, #1658a8 0%, #0b3e85 38%, var(--forest-deep) 75%); }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hero.has-3d .hero-shade { background: linear-gradient(90deg, rgba(12,14,32,.55) 0%, rgba(12,14,32,.12) 55%, transparent), linear-gradient(0deg, rgba(12,14,32,.6), transparent 45%); pointer-events: none; }
+.hero.has-3d .hero-shade { background: linear-gradient(90deg, rgba(2,16,40,.55) 0%, rgba(2,16,40,.12) 55%, transparent), linear-gradient(0deg, rgba(2,16,40,.6), transparent 45%); pointer-events: none; }
 
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -315,7 +315,7 @@ html.lenis, html.lenis body { height: auto; }
 .person { transform-style: preserve-3d; }
 
 @media (max-width: 900px) {
-  .hero.has-3d .hero-shade { background: linear-gradient(0deg, rgba(12,14,32,.75) 0%, rgba(12,14,32,.35) 55%, rgba(12,14,32,.15)); }
+  .hero.has-3d .hero-shade { background: linear-gradient(0deg, rgba(2,16,40,.75) 0%, rgba(2,16,40,.35) 55%, rgba(2,16,40,.15)); }
 }
 
 /* ---------- Menú: contacto rápido ---------- */
@@ -328,7 +328,7 @@ html.lenis, html.lenis body { height: auto; }
   .topbar { padding: 0 5vw; }
   .hero-title { font-size: clamp(40px, 12.2vw, 64px); line-height: .94; }
   .hero-bottom p { max-width: calc(100% - 72px); font-size: 15px; }
-  .hero.has-3d .hero-shade { background: linear-gradient(180deg, rgba(12,14,32,.55) 0%, transparent 16%), linear-gradient(0deg, rgba(12,14,32,.82) 0%, rgba(12,14,32,.4) 50%, rgba(12,14,32,.1)); }
+  .hero.has-3d .hero-shade { background: linear-gradient(180deg, rgba(2,16,40,.55) 0%, transparent 16%), linear-gradient(0deg, rgba(2,16,40,.82) 0%, rgba(2,16,40,.4) 50%, rgba(2,16,40,.1)); }
 
   .section-heading, .team-heading, .principles-title { font-size: clamp(36px, 10.5vw, 46px); }
   .manifesto-title { font-size: clamp(34px, 9.6vw, 42px); }
@@ -401,7 +401,7 @@ html.lenis, html.lenis body { height: auto; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(20, 23, 48, .8);
+  background: rgba(3, 28, 64, .8);
   -webkit-backdrop-filter: blur(22px) saturate(170%);
   backdrop-filter: blur(22px) saturate(170%);
   border-bottom: 1px solid rgba(255, 255, 255, .08);
@@ -481,7 +481,7 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ---- 7. Tarjetas del equipo: profundidad sutil ---- */
 .person { transition: box-shadow .6s var(--ease-out); }
-.person:hover { box-shadow: 0 30px 60px -30px rgba(20, 23, 48, .35); }
+.person:hover { box-shadow: 0 30px 60px -30px rgba(3, 28, 64, .35); }
 .person-visual > img { transition: transform .9s var(--ease-out); }
 
 /* ---- 8. WhatsApp: el pulso avisa unas veces y luego descansa ---- */
@@ -548,8 +548,8 @@ a, button, summary { touch-action: manipulation; }
 :root {
   --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
   --text: "Atkinson Hyperlegible", system-ui, sans-serif;
-  --forest: #292e4e;
-  --forest-deep: #1d2140;
+  --forest: #08418b;
+  --forest-deep: #052a5c;
   --mente: #c9c6e2;
   --mente-soft: #e6e4f2;
   --cuerpo: #b9d7c4;
@@ -558,8 +558,8 @@ a, button, summary { touch-action: manipulation; }
   --lime: var(--cuerpo);          /* el lima se retira: acentos ahora en salvia */
   --paper: #f6f6f2;
   --cream: #ecebe5;
-  --ink: #1c2033;
-  --muted: #5a5f75;
+  --ink: #0e1e3a;
+  --muted: #4f5d75;
   font-size: 100%;
 }
 body { font-size: 1.0625rem; line-height: 1.65; }
@@ -626,7 +626,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .svc-both { color: white; background: var(--forest); border-radius: 0 0 28px 28px; }
 .svc-col h3, .svc-both h3 { margin-bottom: 18px; font: 500 1rem/1.3 var(--text); opacity: .75; }
 .svc {
-  padding: 26px 0; border-top: 1px solid rgba(28,32,51,.18);
+  padding: 26px 0; border-top: 1px solid rgba(14,30,58,.18);
   display: grid; grid-template-columns: 1fr 48px; gap: 6px 24px; align-items: start;
 }
 .svc-both .svc { border-top-color: rgba(255,255,255,.2); grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) 48px; align-items: center; }
@@ -1072,7 +1072,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
   width: min(640px, calc(100% - 32px));
   padding: 18px 18px 18px 22px; border-radius: 22px;
   display: flex; align-items: center; gap: 18px;
-  color: white; background: rgba(29, 33, 64, .86);
+  color: white; background: rgba(5, 42, 92, .86);
   -webkit-backdrop-filter: blur(22px) saturate(170%); backdrop-filter: blur(22px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, .12);
   box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .55);
@@ -1151,8 +1151,8 @@ body { font-size: 1.0625rem; line-height: 1.65; }
    que no compiten. Nada de colores decorativos extra.
    ========================================================= */
 :root {
-  --forest: #292e4e;        /* Azul marino: marca */
-  --forest-deep: #1d2140;   /* Azul noche: fondos profundos */
+  --forest: #08418b;        /* Azul cobalto: marca (pedido por el cliente) */
+  --forest-deep: #052a5c;   /* Azul noche: fondos profundos */
   --mente: #c9c6e2;         /* Lavanda: psicología */
   --mente-soft: #e7e5f3;
   --cuerpo: #f2c4ae;        /* Durazno: nutrición. El opuesto cálido del azul, recuerda el alimento */
@@ -1162,16 +1162,16 @@ body { font-size: 1.0625rem; line-height: 1.65; }
   --lime: var(--cuerpo);
   --paper: #f5f6f9;         /* Niebla: fondo claro */
   --cream: #e9ebf2;         /* Perla: secciones alternas */
-  --ink: #1c2033;           /* Tinta */
-  --muted: #555a70;         /* Pizarra: texto secundario */
-  --line: rgba(28, 32, 51, .16);
+  --ink: #0e1e3a;           /* Tinta */
+  --muted: #4f5d75;         /* Pizarra: texto secundario */
+  --line: rgba(14, 30, 58, .16);
 }
 .crisis { border-color: rgba(201, 198, 226, .4); }
 
 /* Barra flotante: borde de luz arriba y sombra suave abajo, en vez de una línea dura */
 .topbar::before {
   border-bottom: 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 12px 32px -18px rgba(12, 14, 32, .55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 12px 32px -18px rgba(2, 16, 40, .55);
 }
 
 /* Aviso de cookies: aparece como un material que se materializa (desenfoque + escala), no solo un deslizamiento */
@@ -1193,7 +1193,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
    Dos círculos que se acercan y se unen; el logo vive donde se tocan.
    ========================================================= */
 .hero .hero-shade {
-  background: linear-gradient(90deg, rgba(12,14,32,.55) 0%, rgba(12,14,32,.12) 55%, transparent), linear-gradient(0deg, rgba(12,14,32,.55), transparent 45%);
+  background: linear-gradient(90deg, rgba(2,16,40,.55) 0%, rgba(2,16,40,.12) 55%, transparent), linear-gradient(0deg, rgba(2,16,40,.55), transparent 45%);
   pointer-events: none;
 }
 .hero-visual {
@@ -1252,7 +1252,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 
 @media (max-width: 900px) {
   .hero-visual { --s: min(50vw, 31svh); left: 0; right: 0; top: 84px; width: 100%; height: 40svh; }
-  .hero .hero-shade { background: linear-gradient(0deg, rgba(12,14,32,.8) 0%, rgba(12,14,32,.35) 45%, transparent 70%); }
+  .hero .hero-shade { background: linear-gradient(0deg, rgba(2,16,40,.8) 0%, rgba(2,16,40,.35) 45%, transparent 70%); }
 }
 @media (max-width: 620px) {
   .hero-visual { --s: min(48vw, 29svh); }
