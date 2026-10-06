@@ -1,4 +1,4 @@
-const WA_NUMBER = "522203199662";
+const WA_NUMBER = "5212215755446"; // WhatsApp Business del consultorio
 const WA_DEFAULT_MSG = "Hola, quiero agendar una consulta";
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = window.matchMedia("(pointer: fine)").matches;
@@ -619,9 +619,8 @@ function initGlass(heroEl, svg) {
 
   const vs = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
   const fs = `precision highp float;
-uniform vec2 uRes,uC1,uC2,uShift;uniform float uR1,uR2,uK,uFade,uPx;uniform sampler2D uMask;
+uniform vec2 uRes,uC1,uC2,uShift;uniform float uR1,uR2,uK,uFade,uPx;uniform sampler2D uMask;uniform vec3 LAV,PEA,NAVY;
 const vec3 G0=vec3(.929,.953,.980),G1=vec3(.839,.886,.941),G2=vec3(.655,.745,.851);
-const vec3 LAV=vec3(.78,.77,.93),PEA=vec3(.95,.77,.68),NAVY=vec3(.031,.255,.545);
 float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
 float sdf(vec2 p){return smin(length(p-uC1)-uR1,length(p-uC2)-uR2,uK);}
 vec3 mask(vec2 p){return texture2D(uMask,clamp((p+uShift)/uRes,0.,1.)).rgb;}
@@ -680,7 +679,7 @@ void main(){
   gl.enableVertexAttribArray(loc);
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = {};
-  ["uRes", "uC1", "uC2", "uShift", "uR1", "uR2", "uK", "uFade", "uPx", "uMask"].forEach((n) => (U[n] = gl.getUniformLocation(prog, n)));
+  ["uRes", "uC1", "uC2", "uShift", "uR1", "uR2", "uK", "uFade", "uPx", "uMask", "LAV", "PEA", "NAVY"].forEach((n) => (U[n] = gl.getUniformLocation(prog, n)));
 
   const tex = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -744,7 +743,20 @@ void main(){
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, mc);
   }
 
+  // Colores desde las variables CSS: cambiar la paleta en styles.css cambia también el vidrio
+  function readPalette() {
+    const cs = getComputedStyle(document.documentElement);
+    const rgb = (name, fb) => {
+      const h = (cs.getPropertyValue(name).trim() || fb).replace("#", "");
+      return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+    };
+    gl.uniform3fv(U.LAV, rgb("--mente", "#c8c6ee"));
+    gl.uniform3fv(U.PEA, rgb("--cuerpo", "#f2c4ae"));
+    gl.uniform3fv(U.NAVY, rgb("--forest", "#08418b"));
+  }
+
   function resize() {
+    readPalette();
     dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 900 ? 1.5 : 1.75);
     W = Math.round(heroEl.clientWidth * dpr);
     H = Math.round(heroEl.clientHeight * dpr);
