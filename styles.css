@@ -834,7 +834,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .icon-claridad circle { fill: var(--forest); scale: 0; transform-box: fill-box; transform-origin: center; transition: scale .6s var(--ease-out) 1.2s; }
 .icon-empatia circle { mix-blend-mode: multiply; transition: translate 1.4s var(--ease-sheet); }
 .icon-empatia .c-mente { fill: #a9a4d6; translate: -14px 0; }
-.icon-empatia .c-cuerpo { fill: #86c3b7; translate: 14px 0; }
+.icon-empatia .c-cuerpo { fill: #eaa88a; translate: 14px 0; }
 .bento.in-view .draw { stroke-dashoffset: 0; }
 .bento.in-view .icon-ciencia circle, .bento.in-view .icon-claridad circle { scale: 1; }
 .bento.in-view .icon-empatia circle { translate: 0 0; }
@@ -1017,7 +1017,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .cursor-ring { width: 0; height: 0; }
 .cursor-ring::before {
   content: ""; position: absolute; width: 36px; height: 36px; left: -18px; top: -18px;
-  border-radius: 50%; border: 1.5px solid rgba(134, 160, 200, .9);
+  border-radius: 50%; border: 1.5px solid rgba(170, 160, 210, .9);
   transition: scale .45s var(--ease-out), background .3s ease, border-color .3s ease;
 }
 .cursor-ring em {
@@ -1025,7 +1025,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
   color: var(--forest); font: 700 13px/1 var(--text); font-style: normal; white-space: nowrap;
   opacity: 0; transition: opacity .25s ease;
 }
-.cursor.is-link .cursor-ring::before { scale: 1.6; background: rgba(180, 219, 211, .25); }
+.cursor.is-link .cursor-ring::before { scale: 1.6; background: rgba(242, 196, 174, .28); }
 .cursor.is-big .cursor-ring::before { scale: 2.6; background: white; border-color: white; }
 .cursor.is-big .cursor-ring em { opacity: 1; }
 .cursor.is-big .cursor-dot { opacity: 0; }
@@ -1147,7 +1147,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 
 /* =========================================================
    Paleta "azul marino" (apple-design): un azul de marca, dos pasteles
-   con significado (lavanda = mente, agua = cuerpo) y neutros fríos
+   con significado (lavanda = mente, durazno = cuerpo) y neutros fríos
    que no compiten. Nada de colores decorativos extra.
    ========================================================= */
 :root {
@@ -1155,9 +1155,9 @@ body { font-size: 1.0625rem; line-height: 1.65; }
   --forest-deep: #1d2140;   /* Azul noche: fondos profundos */
   --mente: #c9c6e2;         /* Lavanda: psicología */
   --mente-soft: #e7e5f3;
-  --cuerpo: #b4dbd3;        /* Agua: nutrición (antes salvia, ahora más fría para ir con el azul) */
-  --cuerpo-soft: #ddefeb;
-  --cuerpo-deep: #9cccc2;
+  --cuerpo: #f2c4ae;        /* Durazno: nutrición. El opuesto cálido del azul, recuerda el alimento */
+  --cuerpo-soft: #fae6dc;
+  --cuerpo-deep: #eeb69b;
   --sage: var(--cuerpo);
   --lime: var(--cuerpo);
   --paper: #f5f6f9;         /* Niebla: fondo claro */
@@ -1185,7 +1185,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .cookie-banner p { font-weight: 500; letter-spacing: .005em; }
 .topbar .top-contact, .topbar .menu-trigger > span { letter-spacing: .01em; }
 
-/* Pasos: el tercer número usa el agua en vez de blanco puro, para que los tres hablen el mismo idioma */
+/* Pasos: el tercer número usa el fondo claro en vez de blanco puro */
 .steps li:nth-child(3)::before { background: var(--paper); }
 
 /* =========================================================
@@ -1232,7 +1232,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 }
 .hv-cuerpo {
   left: calc(50% - var(--s) * .15);
-  background: radial-gradient(circle at 68% 28%, #dff1ed 0%, var(--cuerpo) 46%, #86c3b7 100%);
+  background: radial-gradient(circle at 68% 28%, #fbe7dd 0%, var(--cuerpo) 46%, #e6a283 100%);
 }
 .hv-label span { font: 500 calc(var(--s) * .115)/1 var(--display); letter-spacing: -.035em; }
 .hv-label small { font-size: max(12px, calc(var(--s) * .042)); font-weight: 700; opacity: .72; }
