@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap" />
-    <link rel="stylesheet" href="styles.css?v=20261006l" />
+    <link rel="stylesheet" href="styles.css?v=20261006n" />
     <script>
       // Pantalla de carga: solo la primera vez por visita y si no se pidió reducir movimiento
       (function () {
@@ -164,18 +164,43 @@
           </div>
           <div class="hero-shade"></div>
           <div class="hero-content">
-            <div class="hero-kicker">Psicología y nutrición en Puebla</div>
-            <h1 class="focus-title hero-title">
-              Cuidamos lo que
-              <span>sostiene tu vida.</span>
-            </h1>
-            <div class="hero-bottom">
-              <p>
-                Bienestar físico y emocional desde un enfoque humano, profesional y
-                profundamente personal.
-              </p>
-              <a class="circle-link" href="#nosotros" aria-label="Conoce nuestro enfoque">
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" /></svg>
+            <div class="hero-copy">
+              <div class="hero-kicker">Psicología y nutrición en Puebla</div>
+              <h1 class="focus-title hero-title">
+                Cuidamos lo que
+                <span>sostiene tu vida.</span>
+              </h1>
+              <p class="hero-lead">Bienestar físico y emocional desde un enfoque humano, profesional y profundamente personal.</p>
+              <div class="hero-actions">
+                <a class="hero-btn hero-btn-primary js-wa" href="#" target="_blank" rel="noreferrer">
+                  <span>Agendar por WhatsApp</span>
+                  <i><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></i>
+                </a>
+                <a class="hero-btn hero-btn-light" href="#equipo">Conoce al equipo</a>
+              </div>
+            </div>
+            <div class="hero-cards">
+              <a class="hcard js-wa" data-wa-msg="Hola, quiero agendar una consulta de psicología" href="#" target="_blank" rel="noreferrer">
+                <span class="hcard-orb orb-mente" aria-hidden="true"></span>
+                <span class="hcard-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></span>
+                <strong>Psicología</strong>
+                <small>Ansiedad, depresión y autoestima</small>
+              </a>
+              <a class="hcard js-wa" data-wa-msg="Hola, quiero agendar una consulta de nutrición" href="#" target="_blank" rel="noreferrer">
+                <span class="hcard-orb orb-cuerpo" aria-hidden="true"></span>
+                <span class="hcard-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></span>
+                <strong>Nutrición</strong>
+                <small>Clínica, control de peso y deportiva</small>
+              </a>
+              <a class="hcard hcard-team" href="#equipo">
+                <span class="hcard-avatars" aria-hidden="true">
+                  <img src="img/avatar-rosario.webp" alt="" width="40" height="40" />
+                  <img src="img/avatar-alejandro.webp" alt="" width="40" height="40" />
+                  <img src="img/avatar-katya.webp" alt="" width="40" height="40" />
+                </span>
+                <span class="hcard-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></span>
+                <strong>Tres especialistas</strong>
+                <small>Psicología y nutrición coordinadas</small>
               </a>
             </div>
           </div>
@@ -490,6 +515,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-    <script src="main.js?v=20261006l"></script>
+    <script src="main.js?v=20261006n"></script>
     </body>
 </html>

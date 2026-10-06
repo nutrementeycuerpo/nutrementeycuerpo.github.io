@@ -122,13 +122,13 @@ window.addEventListener(
 updateTopbar();
 
 // ---------- WhatsApp flotante ----------
-// Se retira en el hero (escritorio) y en el contacto, donde ya hay botones de WhatsApp a la vista.
+// Se retira en el hero y en el contacto, donde ya hay botones de WhatsApp a la vista.
 const waFloat = document.querySelector(".wa-float");
 const contact = document.querySelector(".contact");
 if (waFloat && "IntersectionObserver" in window) {
   const wide = window.matchMedia("(min-width: 621px)");
   const away = { hero: false, contact: false };
-  const sync = () => waFloat.classList.toggle("is-away", (away.hero && wide.matches) || away.contact);
+  const sync = () => waFloat.classList.toggle("is-away", away.hero || away.contact); // el hero ya trae su botón de WhatsApp
   if (hero) new IntersectionObserver(([e]) => { away.hero = e.intersectionRatio > 0.35; sync(); }, { threshold: [0, 0.35, 1] }).observe(hero);
   if (contact) new IntersectionObserver(([e]) => { away.contact = e.isIntersecting; sync(); }, { rootMargin: "0px 0px -35% 0px" }).observe(contact);
   wide.addEventListener("change", sync);
@@ -207,7 +207,7 @@ if (hasGsap && !reduceMotion) {
   });
 
   // Entrada del hero
-  gsap.from(".hero-kicker, .hero-bottom", { y: 30, opacity: 0, duration: 1.2, ease: "expo.out", delay: 0.6 + introDelay, stagger: 0.12 });
+  gsap.from(".hero-kicker, .hero-lead, .hero-actions, .hcard", { y: 30, opacity: 0, duration: 1.2, ease: "expo.out", delay: 0.6 + introDelay, stagger: 0.12 });
   gsap.from(".topbar", { y: -30, opacity: 0, duration: 1, ease: "expo.out", delay: 0.2 + introDelay });
 
   // El texto del hero se aleja al hacer scroll
@@ -620,21 +620,21 @@ function initGlass(heroEl, svg) {
   const vs = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
   const fs = `precision highp float;
 uniform vec2 uRes,uC1,uC2,uShift;uniform float uR1,uR2,uK,uFade,uPx;uniform sampler2D uMask;
-const vec3 G0=vec3(.086,.345,.659),G1=vec3(.043,.243,.522),G2=vec3(.020,.165,.361);
-const vec3 LAV=vec3(.80,.79,.90),PEA=vec3(.95,.77,.68),NAVY=vec3(.031,.255,.545);
+const vec3 G0=vec3(.929,.953,.980),G1=vec3(.839,.886,.941),G2=vec3(.655,.745,.851);
+const vec3 LAV=vec3(.78,.77,.93),PEA=vec3(.95,.77,.68),NAVY=vec3(.031,.255,.545);
 float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
 float sdf(vec2 p){return smin(length(p-uC1)-uR1,length(p-uC2)-uR2,uK);}
 vec3 mask(vec2 p){return texture2D(uMask,clamp((p+uShift)/uRes,0.,1.)).rgb;}
 void main(){
   vec2 p=vec2(gl_FragCoord.x,uRes.y-gl_FragCoord.y);
-  float t0=length((p-vec2(.72,.42)*uRes)/uRes.x)*1.45;
-  vec3 col=mix(G0,G1,smoothstep(0.,.38,t0));col=mix(col,G2,smoothstep(.38,.8,t0));
+  float t0=length(((p-vec2(.5,.38)*uRes)/uRes.x)*vec2(1.,1.3))*1.5;
+  vec3 col=mix(G0,G1,smoothstep(0.,.42,t0));col=mix(col,G2,smoothstep(.42,1.,t0));
   vec3 m=mask(p);
-  col+=vec3(.92,.93,1.)*(m.r*.055+m.g*.03+m.b*.12);
+  col=mix(col,vec3(1.),m.r*.78);col=mix(col,NAVY,m.g*.05+m.b*.16);
   float R=max(uR1,uR2);
   float d=sdf(p);
   float ds=sdf(p-vec2(0.,R*.12));
-  col*=1.-(1.-smoothstep(0.,R*.5,ds))*.38*uFade*step(0.,d);
+  col=mix(col,col*vec3(.70,.76,.86),(1.-smoothstep(0.,R*.55,ds))*.55*uFade*step(0.,d));
   if(d>3.*uPx){gl_FragColor=vec4(col,1.);return;}
   vec2 g=vec2(sdf(p+vec2(1.,0.))-sdf(p-vec2(1.,0.)),sdf(p+vec2(0.,1.))-sdf(p-vec2(0.,1.)));
   vec2 n=normalize(g+1e-6);
@@ -645,7 +645,7 @@ void main(){
   float gr=mask(p+off*1.04).g+mask(p+off*1.04).b;
   float w=smoothstep(-.35,.35,(length(p-uC1)-length(p-uC2))/R);
   vec3 glass=mix(LAV,PEA,w);
-  glass=mix(glass,NAVY,lr*.2+gr*.07);
+  glass=mix(glass,vec3(1.),lr*.42);glass=mix(glass,NAVY,gr*.08);
   float inBoth=step(length(p-uC1),uR1)*step(length(p-uC2),uR2);
   glass=mix(glass,vec3(1.,.975,.965),inBoth*.3);
   float e=1.-t;
@@ -654,6 +654,7 @@ void main(){
   glass*=.88+.2*max(dot(N,L),0.);
   glass+=pow(max(dot(reflect(-L,N),vec3(0.,0.,1.)),0.),36.)*.55;
   glass+=pow(e,7.)*.32;
+  glass=mix(glass,NAVY,smoothstep(2.5*uPx,0.,abs(d))*.18);
   float a=(1.-smoothstep(-1.5*uPx,1.5*uPx,d))*uFade;
   gl_FragColor=vec4(mix(col,glass,a),1.);
 }`;
@@ -722,16 +723,22 @@ void main(){
     const ctm = svg.getScreenCTM();
     const hr = heroEl.getBoundingClientRect();
     const cy = ctm ? (ctm.d * 290 + ctm.f - hr.top) * dpr : H * 0.35;
-    mx.fillStyle = "rgb(255,0,0)";
     mx.textBaseline = "alphabetic";
     let size = 100;
-    mx.font = `700 ${size}px "Bricolage Grotesque", system-ui, sans-serif`;
+    mx.font = `500 ${size}px "Bricolage Grotesque", system-ui, sans-serif`;
     if ("letterSpacing" in mx) mx.letterSpacing = "-4px";
     size = (100 * W * 0.96) / mx.measureText("Nutre").width;
-    mx.font = `700 ${size}px "Bricolage Grotesque", system-ui, sans-serif`;
+    mx.font = `500 ${size}px "Bricolage Grotesque", system-ui, sans-serif`;
     if ("letterSpacing" in mx) mx.letterSpacing = `${-0.045 * size}px`;
     const tw = mx.measureText("Nutre").width;
-    mx.fillText("Nutre", (W - tw) / 2, cy + size * 0.36);
+    // la palabra se desvanece hacia abajo, como niebla
+    const base = cy + size * 0.42;
+    const fade = mx.createLinearGradient(0, base - size * 0.74, 0, base);
+    fade.addColorStop(0, "rgb(255,0,0)");
+    fade.addColorStop(0.5, "rgb(185,0,0)");
+    fade.addColorStop(1, "rgb(12,0,0)");
+    mx.fillStyle = fade;
+    mx.fillText("Nutre", (W - tw) / 2, base);
     mx.globalCompositeOperation = "source-over";
     gl.bindTexture(gl.TEXTURE_2D, tex);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, mc);
@@ -750,7 +757,7 @@ void main(){
   heroEl.insertBefore(canvas, heroEl.firstChild);
   resize();
   window.addEventListener("resize", resize);
-  if (document.fonts && document.fonts.load) document.fonts.load('700 100px "Bricolage Grotesque"').then(drawMask, () => {});
+  if (document.fonts && document.fonts.load) document.fonts.load('500 100px "Bricolage Grotesque"').then(drawMask, () => {});
 
   return {
     render(s, fade, shiftX, shiftY) {
