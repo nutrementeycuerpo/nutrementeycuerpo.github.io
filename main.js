@@ -750,8 +750,8 @@ void main(){
       const h = (cs.getPropertyValue(name).trim() || fb).replace("#", "");
       return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
     };
-    gl.uniform3fv(U.LAV, rgb("--mente", "#c8c6ee"));
-    gl.uniform3fv(U.PEA, rgb("--cuerpo", "#f2c4ae"));
+    gl.uniform3fv(U.LAV, rgb("--mente", "#c4d8f1"));
+    gl.uniform3fv(U.PEA, rgb("--cuerpo", "#ffffff"));
     gl.uniform3fv(U.NAVY, rgb("--forest", "#08418b"));
   }
 

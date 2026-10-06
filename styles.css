@@ -148,7 +148,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--lime); outline-
 .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .person { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; background: var(--cream); }
 .person-visual { position: relative; display: grid; place-items: center; overflow: hidden; }
-.person-one .person-visual { background: #c9c6e2; }
+.person-one .person-visual { background: var(--mente); }
 .person-two .person-visual { background: var(--cuerpo); }
 .person-visual::before { content:""; position:absolute; width: 290px; height: 290px; border: 55px solid rgba(255,255,255,.3); border-radius: 50%; }
 .person-visual > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; transition: transform .6s ease; }
@@ -833,7 +833,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .icon-claridad .draw { stroke: var(--forest); stroke-width: 3; }
 .icon-claridad circle { fill: var(--forest); scale: 0; transform-box: fill-box; transform-origin: center; transition: scale .6s var(--ease-out) 1.2s; }
 .icon-empatia circle { mix-blend-mode: multiply; transition: translate 1.4s var(--ease-sheet); }
-.icon-empatia .c-mente { fill: #a9a4d6; translate: -14px 0; }
+.icon-empatia .c-mente { fill: var(--mente-deep); translate: -14px 0; }
 .icon-empatia .c-cuerpo { fill: var(--cuerpo-deep); translate: 14px 0; }
 .bento.in-view .draw { stroke-dashoffset: 0; }
 .bento.in-view .icon-ciencia circle, .bento.in-view .icon-claridad circle { scale: 1; }
@@ -1017,7 +1017,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .cursor-ring { width: 0; height: 0; }
 .cursor-ring::before {
   content: ""; position: absolute; width: 36px; height: 36px; left: -18px; top: -18px;
-  border-radius: 50%; border: 1.5px solid rgba(170, 160, 210, .9);
+  border-radius: 50%; border: 1.5px solid rgba(8, 65, 139, .55);
   transition: scale .45s var(--ease-out), background .3s ease, border-color .3s ease;
 }
 .cursor-ring em {
@@ -1035,7 +1035,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 /* ---- Avisos legales en el pie ---- */
 .crisis {
   position: relative; z-index: 2; margin-top: 44px; padding: 20px 24px;
-  border-radius: 20px; border: 1px solid rgba(201, 198, 226, .45); background: rgba(201, 198, 226, .1);
+  border-radius: 20px; border: 1px solid rgba(255, 255, 255, .35); background: rgba(255, 255, 255, .08);
   display: grid; gap: 4px; font-size: .9375rem; line-height: 1.55;
 }
 .crisis strong { color: var(--mente); }
@@ -1166,7 +1166,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
   --muted: #4f5d75;         /* Pizarra: texto secundario */
   --line: rgba(14, 30, 58, .16);
 }
-.crisis { border-color: rgba(201, 198, 226, .4); }
+.crisis { border-color: rgba(255, 255, 255, .35); }
 
 /* Barra flotante: borde de luz arriba y sombra suave abajo, en vez de una línea dura */
 .topbar::before {
@@ -1228,7 +1228,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 }
 .hv-mente {
   left: calc(50% - var(--s) * .85);
-  background: radial-gradient(circle at 32% 28%, #e4e2f3 0%, var(--mente) 46%, #a9a4d6 100%);
+  background: radial-gradient(circle at 32% 28%, var(--mente-soft) 0%, var(--mente) 46%, var(--mente-deep) 100%);
 }
 .hv-cuerpo {
   left: calc(50% - var(--s) * .15);
@@ -1387,7 +1387,7 @@ body { font-size: 1.0625rem; line-height: 1.65; }
 .hcard-team { background: rgba(255, 255, 255, .88); }
 .hcard-team:hover { background: #fff; }
 .hcard-orb { position: absolute; top: 16px; left: 16px; width: 46px; height: 46px; border-radius: 50%; }
-.orb-mente { background: radial-gradient(circle at 32% 28%, #fff 0, #e9e8f8 16%, #c8c6ee 52%, #8d89d4 100%); box-shadow: 0 12px 22px -10px rgba(110, 100, 200, .7); }
+.orb-mente { background: radial-gradient(circle at 32% 28%, #fff 0, var(--mente-soft) 16%, var(--mente) 52%, var(--mente-deep) 100%); box-shadow: 0 12px 22px -10px color-mix(in srgb, var(--forest) 45%, transparent); }
 .orb-cuerpo { background: radial-gradient(circle at 32% 28%, #fff 0, var(--cuerpo-soft) 16%, var(--cuerpo) 52%, color-mix(in srgb, var(--cuerpo-deep), #000 14%) 100%); box-shadow: 0 12px 22px -10px color-mix(in srgb, var(--cuerpo-deep) 80%, transparent); }
 .hcard-go { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); background: rgba(255, 255, 255, .75); transition: rotate .5s var(--ease-out); }
 .hcard:hover .hcard-go { rotate: 45deg; }
@@ -1431,3 +1431,25 @@ body:not(.menu-open) .topbar:not(.is-floating) :focus-visible { outline-color: v
 .hcard { min-height: 0; padding-top: 74px; justify-content: flex-start; }
 @media (max-width: 1200px) { .hero-cards .hcard-team { display: none; } }
 @media (max-width: 900px) { .hero-cards .hcard-team { display: flex; } }
+
+/* =========================================================
+   Paleta del cliente: solo azul y blanco.
+   Mente = azul hielo (tinte del cobalto), Cuerpo = blanco.
+   ========================================================= */
+:root {
+  --mente: #c4d8f1;        /* Azul hielo: psicología */
+  --mente-soft: #e3ecf8;
+  --mente-deep: #7fa3d6;
+  --cuerpo: #ffffff;       /* Blanco: nutrición */
+  --cuerpo-soft: #eef3f9;
+  --cuerpo-deep: #dbe5f1;
+  --sage: var(--mente);
+  --lime: #ffffff;
+}
+/* lo blanco necesita un borde suave para no perderse sobre fondos claros */
+.tone-cuerpo, .story[data-tone="cuerpo"] .story-visual, .bento-claridad, .fusion-body { box-shadow: inset 0 0 0 1px rgba(8, 65, 139, .1); }
+.tone-cuerpo .hs-word, .tone-cuerpo-2 .hs-word { color: rgba(8, 65, 139, .06); }
+.icon-claridad .draw { stroke: var(--forest); }
+.chip-ambas { color: #fff; background: transparent; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
+.steps li:nth-child(1)::before { background: #fff; }
+.steps li:nth-child(3)::before { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .7); }
