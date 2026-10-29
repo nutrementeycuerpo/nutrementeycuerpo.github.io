@@ -21,94 +21,215 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Quicksand:wght@500;700&display=swap" />
     <link rel="stylesheet" href="styles.css?v=20261006u" />
+    <script>document.documentElement.classList.add("js");</script>
     <style>
-      body { background: var(--paper); }
-      .ap-top { position: relative; z-index: 2; padding: 26px 5vw; display: flex; align-items: center; justify-content: space-between; gap: 16px; color: white; }
-      .ap-top a.back { font-size: 14px; border-bottom: 1px solid rgba(255,255,255,.5); padding-bottom: 3px; }
+      :root { --ez: cubic-bezier(.22, 1, .36, 1); }
+      body { background: var(--paper); overflow-x: hidden; }
 
-      /* Hero */
-      .ap-hero { position: relative; overflow: hidden; color: white; background: var(--forest); }
-      .ap-hero::before { content: ""; position: absolute; right: -18vw; top: -10vw; width: 70vw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(255,255,255,.16), rgba(255,255,255,0) 62%); pointer-events: none; }
-      .ap-hero-in { position: relative; max-width: 1200px; margin: 0 auto; padding: 40px 5vw 0; display: grid; grid-template-columns: 1.1fr .9fr; gap: 5vw; align-items: end; }
-      .ap-hero-copy { padding-bottom: 110px; }
-      .ap-kicker { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; opacity: .8; }
-      .ap-hero h1 { margin-top: 22px; font: 500 clamp(46px, 7vw, 96px)/.95 var(--display); letter-spacing: -.055em; }
-      .ap-hero h1 span { display: block; opacity: .62; }
+      /* ---------- Barra superior ---------- */
+      .ap-top { position: relative; z-index: 3; padding: 26px 5vw; display: flex; align-items: center; justify-content: space-between; gap: 16px; color: white; }
+      .ap-top a.back { position: relative; font-size: 14px; padding-bottom: 3px; }
+      .ap-top a.back::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: rgba(255,255,255,.6); transform-origin: right; transition: transform .5s var(--ez); }
+      .ap-top a.back:hover::after { transform: scaleX(0); }
+
+      /* ---------- Hero ---------- */
+      .ap-hero { position: relative; overflow: hidden; color: white; background: linear-gradient(160deg, #0a4ea3 0%, var(--forest) 45%, var(--forest-deep) 100%); }
+      .ap-blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; pointer-events: none; }
+      .ap-blob.b1 { width: 46vw; height: 46vw; right: -10vw; top: -14vw; background: #2f7be0; animation: ap-drift 16s ease-in-out infinite alternate; }
+      .ap-blob.b2 { width: 34vw; height: 34vw; left: -12vw; bottom: -16vw; background: #5aa0ff; opacity: .35; animation: ap-drift 20s ease-in-out infinite alternate-reverse; }
+      @keyframes ap-drift { to { transform: translate(-6vw, 5vw) scale(1.12); } }
+      .ap-grid-bg { position: absolute; inset: 0; pointer-events: none; opacity: .18;
+        background-image: radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.2px); background-size: 26px 26px;
+        -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 65%); mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 65%); }
+
+      .ap-hero-in { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 40px 5vw 0; display: grid; grid-template-columns: 1.1fr .9fr; gap: 5vw; align-items: end; }
+      .ap-hero-copy { padding-bottom: 120px; }
+      .ap-kicker { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; backdrop-filter: blur(6px); }
+      .ap-kicker i { width: 7px; height: 7px; border-radius: 50%; background: #9fe3b4; box-shadow: 0 0 0 0 rgba(159,227,180,.7); animation: ap-ping 2s infinite; }
+      @keyframes ap-ping { 70% { box-shadow: 0 0 0 10px rgba(159,227,180,0); } 100% { box-shadow: 0 0 0 0 rgba(159,227,180,0); } }
+      .ap-hero h1 { margin-top: 24px; font: 500 clamp(42px, 6vw, 84px)/.98 var(--display); letter-spacing: -.055em; }
+      .ap-hero h1 .ln { display: block; overflow: hidden; padding-bottom: .06em; white-space: nowrap; }
+      .ap-hero h1 .ln > span { display: inline-block; }
+      .ap-hero h1 .soft { background: linear-gradient(90deg, #cfe2ff, #ffffff 40%, #9cc3ff 80%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: ap-shine 6s linear infinite; }
+      @keyframes ap-shine { to { background-position: -200% 0; } }
       .ap-lead { max-width: 46ch; margin-top: 26px; font-size: 18px; line-height: 1.7; opacity: .88; }
 
+      /* Entrada del hero */
+      .js .ap-in { opacity: 0; transform: translateY(26px); animation: ap-up .9s var(--ez) forwards; animation-delay: calc(var(--d, 0) * 1ms); }
+      .js .ap-hero h1 .ln > span { transform: translateY(105%); animation: ap-rise 1s var(--ez) forwards; animation-delay: calc(var(--d, 0) * 1ms); }
+      @keyframes ap-up { to { opacity: 1; transform: none; } }
+      @keyframes ap-rise { to { transform: none; } }
+
       .ap-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-      .ap-btn { display: inline-flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 28px; border-radius: 999px; background: white; color: var(--forest); font-size: 16px; font-weight: 700; transition: transform .3s ease; }
-      .ap-btn:hover { transform: translateY(-2px); }
-      .ap-btn svg { width: 22px; height: 22px; }
+      .ap-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 28px; border-radius: 999px; background: white; color: var(--forest); font-size: 16px; font-weight: 700; transition: transform .4s var(--ez), box-shadow .4s var(--ez); }
+      .ap-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 30px -14px rgba(0,0,0,.45); }
+      .ap-btn::before { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .9s var(--ez); }
+      .ap-btn:hover::before { transform: translateX(120%); }
+      .ap-btn svg { width: 22px; height: 22px; transition: transform .4s var(--ez); }
+      .ap-btn:hover svg { transform: translateY(2px); }
+      .ap-btn .arr { width: 18px; height: 18px; }
+      .ap-btn:hover .arr { transform: translateX(4px); }
       .ap-btn-ghost { background: transparent; color: white; border: 1px solid rgba(255,255,255,.55); }
+      .ap-btn-ghost::before { background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%); }
       .ap-meta { font-size: 13px; opacity: .75; }
       .ap-soon-tag { display: inline-flex; align-items: center; gap: 10px; min-height: 60px; padding: 0 24px; border-radius: 999px; border: 1px dashed rgba(255,255,255,.7); font-size: 15px; font-weight: 700; }
       .ap-soon-tag i { width: 8px; height: 8px; border-radius: 50%; background: white; animation: ap-pulse 1.6s ease-in-out infinite; }
-      @keyframes ap-pulse { 50% { opacity: .25; } }
+      @keyframes ap-pulse { 50% { opacity: .25; transform: scale(.7); } }
       .ap-soon { display: none; }
       .is-soon .ap-file { display: none; }
       .is-soon .ap-soon { display: inline-flex; }
 
-      /* Teléfono */
-      .ap-phone { justify-self: center; width: min(330px, 80vw); aspect-ratio: 9 / 18.5; margin-bottom: -90px; padding: 14px; border-radius: 48px; background: #0b1730; box-shadow: 0 50px 90px -30px rgba(0,0,0,.55); }
-      .ap-screen { height: 100%; border-radius: 36px; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 36px 18px 20px; background: var(--paper); color: var(--ink); }
+      /* ---------- Teléfono ---------- */
+      .ap-stage { position: relative; justify-self: center; width: min(330px, 80vw); margin-bottom: -90px; }
+      .ap-ring { position: absolute; left: 50%; top: 42%; width: 150%; aspect-ratio: 1; border-radius: 50%; border: 1px dashed rgba(255,255,255,.25); transform: translate(-50%, -50%); animation: ap-spin 60s linear infinite; pointer-events: none; }
+      .ap-ring::before { content: ""; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: #9fe3b4; box-shadow: 0 0 16px #9fe3b4; }
+      .ap-ring.r2 { width: 118%; border-style: solid; border-color: rgba(255,255,255,.1); animation-duration: 40s; animation-direction: reverse; }
+      .ap-ring.r2::before { background: white; box-shadow: 0 0 14px white; width: 7px; height: 7px; }
+      @keyframes ap-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+      .js .ap-stage { opacity: 0; transform: translateY(70px) rotate(4deg); animation: ap-stage-in 1.3s var(--ez) .35s forwards; }
+      @keyframes ap-stage-in { to { opacity: 1; transform: none; } }
+      .ap-phone { position: relative; z-index: 1; width: 100%; aspect-ratio: 9 / 18.5; padding: 14px; border-radius: 48px; background: #0b1730; box-shadow: 0 50px 90px -30px rgba(0,0,0,.6), inset 0 0 0 2px rgba(255,255,255,.06); animation: ap-float 6s ease-in-out 1.7s infinite; }
+      .ap-phone::before { content: ""; position: absolute; top: 24px; left: 50%; width: 76px; height: 20px; border-radius: 999px; background: #0b1730; transform: translateX(-50%); z-index: 2; }
+      @keyframes ap-float { 50% { transform: translateY(-14px) rotate(-1deg); } }
+      .ap-screen { position: relative; height: 100%; border-radius: 36px; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 44px 18px 20px; background: var(--paper); color: var(--ink); }
+      .ap-screen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.5) 50%, transparent 60%); transform: translateX(-100%); animation: ap-glare 7s ease-in-out 2.5s infinite; pointer-events: none; }
+      @keyframes ap-glare { 0%, 70% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
       .ap-screen .hdr { display: flex; align-items: center; gap: 10px; color: var(--forest); font: 700 17px/1 var(--display); letter-spacing: -.03em; }
       .ap-screen .hdr svg { width: 22px; height: 24px; fill: var(--forest); }
       .ap-screen .hi { margin-top: 4px; font: 500 22px/1.15 var(--display); letter-spacing: -.04em; }
-      .ap-card { border-radius: 18px; padding: 14px; background: white; box-shadow: 0 1px 0 var(--line); }
+      .ap-card { position: relative; border-radius: 18px; padding: 14px; background: white; box-shadow: 0 1px 0 var(--line), 0 8px 20px -14px rgba(8,65,139,.35); }
       .ap-card small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
       .ap-card strong { display: block; margin-top: 4px; font-size: 14px; }
+      .ap-card .tick { position: absolute; right: 14px; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: 50%; display: grid; place-items: center; background: #e6f6ec; color: #1f8a4c; }
+      .ap-card .tick svg { width: 12px; height: 12px; }
       .ap-card.blue { background: var(--forest); color: white; }
       .ap-card.blue small { color: rgba(255,255,255,.7); }
       .ap-bar { height: 6px; margin-top: 10px; border-radius: 99px; background: rgba(255,255,255,.25); overflow: hidden; }
-      .ap-bar i { display: block; width: 64%; height: 100%; border-radius: inherit; background: white; }
+      .ap-bar i { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #9fe3b4, white); animation: ap-fill 2.4s var(--ez) 1.6s forwards; }
+      @keyframes ap-fill { to { width: 66%; } }
+      .js .ap-screen > * { opacity: 0; transform: translateY(14px); animation: ap-up .7s var(--ez) forwards; }
+      .js .ap-screen > :nth-child(1) { animation-delay: .9s; }
+      .js .ap-screen > :nth-child(2) { animation-delay: 1.05s; }
+      .js .ap-screen > :nth-child(3) { animation-delay: 1.25s; }
+      .js .ap-screen > :nth-child(4) { animation-delay: 1.45s; }
+      .js .ap-screen > :nth-child(5) { animation-delay: 1.65s; }
+      .js .ap-screen > :nth-child(6) { animation-delay: 1.85s; }
+      .ap-card .tick { transform: scale(0); animation: ap-pop .5s var(--ez) 2.6s forwards; }
+      @keyframes ap-pop { 60% { transform: scale(1.2); } to { transform: scale(1); } }
 
-      /* Secciones */
-      .ap-sec { max-width: 1100px; margin: 0 auto; padding: 160px 5vw 40px; }
+      /* Burbujas flotantes alrededor del teléfono */
+      .ap-chip { position: absolute; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 16px; background: rgba(255,255,255,.96); color: var(--ink); font-size: 13px; font-weight: 700; white-space: nowrap; box-shadow: 0 18px 36px -16px rgba(0,0,0,.45); }
+      .ap-chip b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; background: var(--forest); color: white; }
+      .ap-chip b svg { width: 16px; height: 16px; }
+      .ap-chip small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; }
+      .ap-chip.c1 { left: -52%; top: 9%; }
+      .ap-chip.c2 { right: -46%; top: 56%; }
+      .ap-chip.c3 { left: -44%; top: 80%; }
+      .js .ap-chip { opacity: 0; transform: scale(.6) translateY(10px); animation: ap-chip-in .8s var(--ez) forwards, ap-bob 5s ease-in-out infinite; }
+      .js .ap-chip.c1 { animation-delay: 2.2s, 3s; }
+      .js .ap-chip.c2 { animation-delay: 2.5s, 3.4s; }
+      .js .ap-chip.c3 { animation-delay: 2.8s, 3.8s; }
+      @keyframes ap-chip-in { to { opacity: 1; transform: none; } }
+      @keyframes ap-bob { 50% { translate: 0 -8px; } }
+
+      /* ---------- Cinta en movimiento ---------- */
+      .ap-marquee { position: relative; z-index: 1; overflow: hidden; padding: 22px 0; margin-top: 130px; border-block: 1px solid var(--line); background: white; }
+      .ap-marquee-track { display: flex; width: max-content; gap: 44px; animation: ap-marq 32s linear infinite; }
+      .ap-marquee span { display: inline-flex; align-items: center; gap: 44px; color: var(--forest); font: 500 clamp(22px, 2.6vw, 34px)/1 var(--display); letter-spacing: -.04em; white-space: nowrap; }
+      .ap-marquee span::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #9fe3b4; }
+      @keyframes ap-marq { to { transform: translateX(-50%); } }
+
+      /* ---------- Secciones ---------- */
+      .ap-sec { max-width: 1100px; margin: 0 auto; padding: 110px 5vw 40px; }
       .ap-sec + .ap-sec { padding-top: 80px; }
-      .ap-sec h2 { max-width: 18ch; font: 500 clamp(34px, 4.6vw, 58px)/1.02 var(--display); letter-spacing: -.05em; color: var(--ink); }
+      .ap-eyebrow { color: var(--forest); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+      .ap-sec h2 { max-width: 18ch; margin-top: 14px; font: 500 clamp(34px, 4.6vw, 58px)/1.02 var(--display); letter-spacing: -.05em; color: var(--ink); }
       .ap-sec h2 span { color: var(--forest); }
+
+      /* Aparecer al hacer scroll */
+      .js .rv { opacity: 0; transform: translateY(34px); transition: opacity .9s var(--ez), transform .9s var(--ez); transition-delay: calc(var(--d, 0) * 1ms); }
+      .js .rv.in { opacity: 1; transform: none; }
+
       .ap-feats { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-      .ap-feat { padding: 30px 26px; border-radius: 26px; background: var(--cream); }
-      .ap-feat b { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--forest); color: white; font: 700 16px var(--display); }
+      .ap-feat { position: relative; overflow: hidden; padding: 30px 26px 32px; border-radius: 26px; background: var(--cream); transition: transform .5s var(--ez), box-shadow .5s var(--ez), background .5s var(--ez); }
+      .ap-feat::after { content: ""; position: absolute; right: -40px; bottom: -40px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(8,65,139,.14), transparent 70%); transition: transform .7s var(--ez); }
+      .ap-feat:hover { transform: translateY(-8px); background: white; box-shadow: 0 30px 50px -30px rgba(8,65,139,.45); }
+      .ap-feat:hover::after { transform: scale(1.8); }
+      .ap-ico { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; background: var(--forest); color: white; transition: transform .6s var(--ez); }
+      .ap-feat:hover .ap-ico { transform: rotate(-8deg) scale(1.06); }
+      .ap-ico svg { width: 28px; height: 28px; }
+      .ap-ico path, .ap-ico circle, .ap-ico rect { stroke-dasharray: 100; stroke-dashoffset: 100; }
+      .rv.in .ap-ico path, .rv.in .ap-ico circle, .rv.in .ap-ico rect, html:not(.js) .ap-ico * { animation: ap-draw 1.4s var(--ez) forwards; animation-delay: calc(var(--d, 0) * 1ms + 300ms); }
+      @keyframes ap-draw { to { stroke-dashoffset: 0; } }
       .ap-feat h3 { margin-top: 22px; font: 500 22px/1.2 var(--display); letter-spacing: -.03em; color: var(--ink); }
-      .ap-feat p { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+      .ap-feat p { position: relative; z-index: 1; margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.65; }
 
       .ap-steps { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: s; list-style: none; }
-      .ap-steps li { counter-increment: s; padding-top: 20px; border-top: 2px solid var(--forest); color: var(--ink); font-size: 16px; line-height: 1.6; }
-      .ap-steps li::before { content: "0" counter(s); display: block; margin-bottom: 10px; color: var(--forest); font: 700 14px var(--display); letter-spacing: .08em; }
+      .ap-steps li { position: relative; counter-increment: s; padding-top: 22px; color: var(--ink); font-size: 16px; line-height: 1.6; }
+      .ap-steps li::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: var(--forest); transform-origin: left; }
+      .js .ap-steps li.rv::after { transform: scaleX(0); transition: transform 1.1s var(--ez); transition-delay: calc(var(--d, 0) * 1ms + 150ms); }
+      .js .ap-steps li.rv.in::after { transform: none; }
+      .ap-steps li::before { content: "0" counter(s); display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 14px; border-radius: 50%; background: var(--cream); color: var(--forest); font: 700 14px var(--display); }
 
       .ap-faq { margin-top: 36px; }
-      .ap-faq details { border-top: 1px solid var(--line); padding: 22px 0; }
+      .ap-faq details { border-top: 1px solid var(--line); }
       .ap-faq details:last-child { border-bottom: 1px solid var(--line); }
-      .ap-faq summary { cursor: pointer; font: 500 20px/1.3 var(--display); letter-spacing: -.02em; color: var(--ink); }
-      .ap-faq p { margin-top: 12px; max-width: 62ch; color: var(--muted); font-size: 16px; line-height: 1.7; }
+      .ap-faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 0; font: 500 20px/1.3 var(--display); letter-spacing: -.02em; color: var(--ink); transition: color .3s; }
+      .ap-faq summary::-webkit-details-marker { display: none; }
+      .ap-faq summary:hover { color: var(--forest); }
+      .ap-faq summary i { flex: none; position: relative; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); transition: background .4s var(--ez), transform .5s var(--ez); }
+      .ap-faq summary i::before, .ap-faq summary i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.6px; background: currentColor; transform: translate(-50%, -50%); }
+      .ap-faq summary i::after { transform: translate(-50%, -50%) rotate(90deg); transition: transform .5s var(--ez); }
+      .ap-faq details[open] summary i { background: var(--forest); color: white; border-color: var(--forest); transform: rotate(180deg); }
+      .ap-faq details[open] summary i::after { transform: translate(-50%, -50%) rotate(0); }
+      .ap-faq p { max-width: 62ch; padding-bottom: 24px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+      .ap-faq details[open] p { animation: ap-up .6s var(--ez); }
 
       .ap-cta { max-width: 1100px; margin: 80px auto 0; padding: 0 5vw 100px; }
-      .ap-cta-box { padding: 56px 6vw; border-radius: 36px; color: white; background: var(--forest); display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
-      .ap-cta-box h2 { max-width: 16ch; font: 500 clamp(30px, 4vw, 48px)/1.05 var(--display); letter-spacing: -.045em; }
+      .ap-cta-box { position: relative; overflow: hidden; padding: 64px 6vw; border-radius: 36px; color: white; background: linear-gradient(135deg, #0a4ea3, var(--forest-deep)); display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
+      .ap-cta-box::before, .ap-cta-box::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.18); pointer-events: none; }
+      .ap-cta-box::before { width: 360px; height: 360px; right: -90px; top: -150px; animation: ap-breathe 7s ease-in-out infinite; }
+      .ap-cta-box::after { width: 220px; height: 220px; right: 40px; bottom: -130px; animation: ap-breathe 9s ease-in-out infinite reverse; }
+      @keyframes ap-breathe { 50% { transform: scale(1.15); } }
+      .ap-cta-box h2 { position: relative; max-width: 16ch; font: 500 clamp(30px, 4vw, 48px)/1.05 var(--display); letter-spacing: -.045em; }
+      .ap-cta-box .ap-btn { position: relative; }
       .ap-foot { padding: 32px 5vw 48px; text-align: center; font-size: 14px; color: var(--muted); }
-      .ap-foot a { text-decoration: underline; text-underline-offset: 3px; }
+      .ap-foot a { text-decoration: underline; text-underline-offset: 3px; transition: color .3s; }
+      .ap-foot a:hover { color: var(--forest); }
 
       @media (max-width: 900px) {
         .ap-hero-in { grid-template-columns: 1fr; padding-top: 20px; }
-        .ap-hero-copy { padding-bottom: 40px; }
-        .ap-phone { width: min(260px, 72vw); }
+        .ap-hero-copy { padding-bottom: 50px; }
+        .ap-stage { width: min(260px, 66vw); }
+        .ap-chip.c1 { left: -34%; top: 6%; }
+        .ap-chip.c2 { right: -30%; }
+        .ap-chip.c3 { display: none; }
         .ap-feats { grid-template-columns: 1fr; }
         .ap-steps { grid-template-columns: 1fr 1fr; }
-        .ap-sec { padding-top: 140px; }
+        .ap-marquee { margin-top: 120px; }
       }
       @media (max-width: 560px) {
         .ap-steps { grid-template-columns: 1fr; }
         .ap-top a.back { display: none; }
+        .ap-chip { font-size: 12px; padding: 8px 10px 8px 8px; }
+        .ap-chip b { width: 26px; height: 26px; }
+        .ap-chip small { display: none; }
+        .ap-chip.c1 { left: -26%; }
+        .ap-chip.c2 { right: -22%; }
       }
-      @media (prefers-reduced-motion: reduce) { .ap-soon-tag i { animation: none; } .ap-btn { transition: none; } }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
+        .ap-marquee-track { animation: none; }
+      }
     </style>
   </head>
   <!-- Mientras no exista el APK, deja la clase "is-soon" en <body>. Cuando subas el APK a GitHub Releases
        con el nombre nutre-mente-y-cuerpo.apk, quita "is-soon" y los botones de descarga se activan solos. -->
   <body class="is-soon">
     <section class="ap-hero">
+      <div class="ap-blob b1" aria-hidden="true"></div>
+      <div class="ap-blob b2" aria-hidden="true"></div>
+      <div class="ap-grid-bg" aria-hidden="true"></div>
       <header class="ap-top">
         <a class="brand brand-light" href="./" aria-label="Nutre Mente & Cuerpo, inicio">
           <svg aria-hidden="true" class="mark" viewBox="-0.5 0 265.9 295.4"><path d="M265.4,250.5c-9.2,10.7-21.2,15.6-34.9,18.4c-32.8,6.8-65.4,14.8-98.2,21.7c-10.9,2.2-21.9,3.6-32.9,4.2c-10.1,0.6-17-4.6-18.6-12.2c-1.6-7.9,3-16.1,13.2-18.7c16.8-4.3,34-7,51-10.6c25.8-5.4,51.4-11.5,77.2-16.2c15-2.8,29.9-0.7,43.1,8L265.4,250.5z M56.4,0c-11.1,6.7-20,15.6-24.1,27.9c-10.6,31.8-20.7,63.8-30.4,96c-1.9,6.3-2.4,13-1.5,19.5c0.6,4.3,4.3,10.3,7.8,11.3c4.1,1.1,9.9-1.8,14.2-4.2c2.5-1.4,4.1-5.1,5.4-8.1c14.8-35.8,29.3-71.7,35.6-110.1C65.1,22,61.3,10.8,60,0H56.4z M175.2,87.6c-28.9,18.3-58.2,35.8-81.7,61.4c-5.6,6.1-12.9,10.7-19,16.4c-5.4,5.1-11,10.2-15.2,16.3c-3.8,5.4-4,12.1,1.4,17.3c5.1,4.9,11.3,4.4,16.7,1.1c11.5-7,23.4-13.7,33.7-22.2c20.5-17.1,40.1-35.2,59.9-53c7.8-7,15.6-14.1,23.1-21.4c5.8-5.7,10.5-12.2,9.6-21.6C193,79.2,183.7,82.2,175.2,87.6z" /></svg>
@@ -118,51 +239,74 @@
       </header>
       <div class="ap-hero-in">
         <div class="ap-hero-copy">
-          <div class="ap-kicker">App oficial · Android</div>
-          <h1>Tu plan, <span>siempre en tu bolsillo.</span></h1>
-          <p class="ap-lead">
+          <div class="ap-kicker ap-in" style="--d:100"><i></i>App oficial · Android</div>
+          <h1>
+            <span class="ln"><span style="--d:220">Tu plan,</span></span>
+            <span class="ln"><span class="soft" style="--d:340">siempre en tu</span></span>
+            <span class="ln"><span class="soft" style="--d:460">bolsillo.</span></span>
+          </h1>
+          <p class="ap-lead ap-in" style="--d:650">
             Lleva contigo tu plan de alimentación y tu rutina de entrenamiento de Nutre Mente &amp; Cuerpo,
             con seguimiento entre consulta y consulta.
           </p>
-          <div class="ap-actions">
+          <div class="ap-actions ap-in" style="--d:800">
             <a class="ap-btn ap-file" href="https://github.com/nutrementeycuerpo/nutrementeycuerpo.github.io/releases/latest/download/nutre-mente-y-cuerpo.apk" download>
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
               Descargar para Android
             </a>
             <span class="ap-meta ap-file">Archivo APK · Para teléfonos Android</span>
             <span class="ap-soon-tag ap-soon"><i></i>Disponible muy pronto</span>
-            <a class="ap-btn ap-btn-ghost ap-soon" href="https://wa.me/5212215755446?text=Hola%2C%20quiero%20que%20me%20avisen%20cuando%20est%C3%A9%20lista%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">Avísame por WhatsApp</a>
+            <a class="ap-btn ap-btn-ghost ap-soon" href="https://wa.me/5212215755446?text=Hola%2C%20quiero%20que%20me%20avisen%20cuando%20est%C3%A9%20lista%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">
+              Avísame por WhatsApp
+              <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
           </div>
         </div>
-        <div class="ap-phone" aria-hidden="true">
-          <div class="ap-screen">
-            <div class="hdr"><svg viewBox="-0.5 0 265.9 295.4"><path d="M265.4,250.5c-9.2,10.7-21.2,15.6-34.9,18.4c-32.8,6.8-65.4,14.8-98.2,21.7c-10.9,2.2-21.9,3.6-32.9,4.2c-10.1,0.6-17-4.6-18.6-12.2c-1.6-7.9,3-16.1,13.2-18.7c16.8-4.3,34-7,51-10.6c25.8-5.4,51.4-11.5,77.2-16.2c15-2.8,29.9-0.7,43.1,8L265.4,250.5z M56.4,0c-11.1,6.7-20,15.6-24.1,27.9c-10.6,31.8-20.7,63.8-30.4,96c-1.9,6.3-2.4,13-1.5,19.5c0.6,4.3,4.3,10.3,7.8,11.3c4.1,1.1,9.9-1.8,14.2-4.2c2.5-1.4,4.1-5.1,5.4-8.1c14.8-35.8,29.3-71.7,35.6-110.1C65.1,22,61.3,10.8,60,0H56.4z M175.2,87.6c-28.9,18.3-58.2,35.8-81.7,61.4c-5.6,6.1-12.9,10.7-19,16.4c-5.4,5.1-11,10.2-15.2,16.3c-3.8,5.4-4,12.1,1.4,17.3c5.1,4.9,11.3,4.4,16.7,1.1c11.5-7,23.4-13.7,33.7-22.2c20.5-17.1,40.1-35.2,59.9-53c7.8-7,15.6-14.1,23.1-21.4c5.8-5.7,10.5-12.2,9.6-21.6C193,79.2,183.7,82.2,175.2,87.6z" /></svg>Nutre</div>
-            <div class="hi">Hola, este es tu plan de hoy</div>
-            <div class="ap-card blue"><small>Tu avance del día</small><strong>4 de 6 comidas</strong><div class="ap-bar"><i></i></div></div>
-            <div class="ap-card"><small>Comida</small><strong>Tu plan de alimentación</strong></div>
-            <div class="ap-card"><small>Entrenamiento</small><strong>Tu rutina de hoy</strong></div>
-            <div class="ap-card"><small>Próxima consulta</small><strong>Tu seguimiento</strong></div>
+
+        <div class="ap-stage" aria-hidden="true">
+          <div class="ap-ring"></div>
+          <div class="ap-ring r2"></div>
+          <div class="ap-chip c1"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7" /></svg></b><span>Plan listo<small>Personalizado para ti</small></span></div>
+          <div class="ap-chip c2"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9v6M18 9v6M3 11v2M21 11v2M6 12h12" /></svg></b><span>Rutina de hoy<small>Lista para entrenar</small></span></div>
+          <div class="ap-chip c3"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg></b><span>Tu avance<small>Va por buen camino</small></span></div>
+          <div class="ap-phone">
+            <div class="ap-screen">
+              <div class="hdr"><svg viewBox="-0.5 0 265.9 295.4"><path d="M265.4,250.5c-9.2,10.7-21.2,15.6-34.9,18.4c-32.8,6.8-65.4,14.8-98.2,21.7c-10.9,2.2-21.9,3.6-32.9,4.2c-10.1,0.6-17-4.6-18.6-12.2c-1.6-7.9,3-16.1,13.2-18.7c16.8-4.3,34-7,51-10.6c25.8-5.4,51.4-11.5,77.2-16.2c15-2.8,29.9-0.7,43.1,8L265.4,250.5z M56.4,0c-11.1,6.7-20,15.6-24.1,27.9c-10.6,31.8-20.7,63.8-30.4,96c-1.9,6.3-2.4,13-1.5,19.5c0.6,4.3,4.3,10.3,7.8,11.3c4.1,1.1,9.9-1.8,14.2-4.2c2.5-1.4,4.1-5.1,5.4-8.1c14.8-35.8,29.3-71.7,35.6-110.1C65.1,22,61.3,10.8,60,0H56.4z M175.2,87.6c-28.9,18.3-58.2,35.8-81.7,61.4c-5.6,6.1-12.9,10.7-19,16.4c-5.4,5.1-11,10.2-15.2,16.3c-3.8,5.4-4,12.1,1.4,17.3c5.1,4.9,11.3,4.4,16.7,1.1c11.5-7,23.4-13.7,33.7-22.2c20.5-17.1,40.1-35.2,59.9-53c7.8-7,15.6-14.1,23.1-21.4c5.8-5.7,10.5-12.2,9.6-21.6C193,79.2,183.7,82.2,175.2,87.6z" /></svg>Nutre</div>
+              <div class="hi">Hola, este es tu plan de hoy</div>
+              <div class="ap-card blue"><small>Tu avance del día</small><strong>4 de 6 comidas</strong><div class="ap-bar"><i></i></div></div>
+              <div class="ap-card"><small>Comida</small><strong>Tu plan de alimentación</strong><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7" /></svg></span></div>
+              <div class="ap-card"><small>Entrenamiento</small><strong>Tu rutina de hoy</strong></div>
+              <div class="ap-card"><small>Próxima consulta</small><strong>Tu seguimiento</strong></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <div class="ap-marquee" aria-hidden="true">
+      <div class="ap-marquee-track">
+        <span>Plan de alimentación</span><span>Rutina de entrenamiento</span><span>Seguimiento</span><span>Hábitos sostenibles</span><span>Nutrición en Puebla</span>
+        <span>Plan de alimentación</span><span>Rutina de entrenamiento</span><span>Seguimiento</span><span>Hábitos sostenibles</span><span>Nutrición en Puebla</span>
+      </div>
+    </div>
+
     <main>
       <section class="ap-sec">
-        <h2>Todo tu proceso, <span>en un solo lugar.</span></h2>
+        <div class="ap-eyebrow rv">Lo que encuentras en la app</div>
+        <h2 class="rv" style="--d:80">Todo tu proceso, <span>en un solo lugar.</span></h2>
         <div class="ap-feats">
-          <article class="ap-feat">
-            <b>01</b>
+          <article class="ap-feat rv" style="--d:0">
+            <div class="ap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6.5" pathLength="100" /><path d="M3 4v6M5 4v6M3 7h2M4 10v10M21 4c-2 1-2 4-2 6h2V4zM21 10v10" pathLength="100" /></svg></div>
             <h3>Tu plan de alimentación</h3>
             <p>Consulta qué te toca comer cada día, pensado para tu historia, tus gustos y tu ritmo de vida.</p>
           </article>
-          <article class="ap-feat">
-            <b>02</b>
+          <article class="ap-feat rv" style="--d:140">
+            <div class="ap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11" pathLength="100" /></svg></div>
             <h3>Tu rutina de entrenamiento</h3>
             <p>Ten a la mano los ejercicios de tu plan para entrenar con claridad, en casa o en el gimnasio.</p>
           </article>
-          <article class="ap-feat">
-            <b>03</b>
+          <article class="ap-feat rv" style="--d:280">
+            <div class="ap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5" pathLength="100" /><path d="M5 3v4h4M19 21v-4h-4" pathLength="100" /></svg></div>
             <h3>Siempre al día</h3>
             <p>Tu plan se actualiza con tu proceso, para que nunca te quedes sin guía entre consultas.</p>
           </article>
@@ -170,37 +314,42 @@
       </section>
 
       <section class="ap-sec">
-        <h2>Cómo instalarla <span>en tu Android.</span></h2>
+        <div class="ap-eyebrow rv">En menos de un minuto</div>
+        <h2 class="rv" style="--d:80">Cómo instalarla <span>en tu Android.</span></h2>
         <ol class="ap-steps">
-          <li>Desde tu teléfono, toca “Descargar para Android”.</li>
-          <li>Abre el archivo descargado desde tus notificaciones o la carpeta Descargas.</li>
-          <li>Si tu teléfono lo pide, permite instalar apps de esta fuente y toca “Instalar”.</li>
-          <li>Abre la app, crea tu cuenta y contesta tu cuestionario.</li>
+          <li class="rv" style="--d:0">Desde tu teléfono, toca “Descargar para Android”.</li>
+          <li class="rv" style="--d:150">Abre el archivo descargado desde tus notificaciones o la carpeta Descargas.</li>
+          <li class="rv" style="--d:300">Si tu teléfono lo pide, permite instalar apps de esta fuente y toca “Instalar”.</li>
+          <li class="rv" style="--d:450">Abre la app, crea tu cuenta y contesta tu cuestionario.</li>
         </ol>
       </section>
 
       <section class="ap-sec">
-        <h2>Preguntas <span>sobre la app.</span></h2>
-        <div class="ap-faq">
+        <div class="ap-eyebrow rv">Dudas frecuentes</div>
+        <h2 class="rv" style="--d:80">Preguntas <span>sobre la app.</span></h2>
+        <div class="ap-faq rv" style="--d:160">
           <details>
-            <summary>¿Por qué se descarga desde aquí y no desde Google Play?</summary>
+            <summary>¿Por qué se descarga desde aquí y no desde Google Play?<i aria-hidden="true"></i></summary>
             <p>Por ahora la app se instala con un archivo APK directamente desde esta página. Es nuestra app oficial; solo descárgala desde este sitio.</p>
           </details>
           <details>
-            <summary>¿Funciona en iPhone?</summary>
+            <summary>¿Funciona en iPhone?<i aria-hidden="true"></i></summary>
             <p>Esta descarga es solo para teléfonos Android. Si tienes iPhone, escríbenos por WhatsApp y te contamos cómo llevar tu seguimiento.</p>
           </details>
           <details>
-            <summary>¿Necesito ser paciente del consultorio?</summary>
+            <summary>¿Necesito ser paciente del consultorio?<i aria-hidden="true"></i></summary>
             <p>La app está pensada para acompañar tu proceso de nutrición con nosotros. Si aún no eres paciente, escríbenos y te ayudamos a agendar tu primera consulta.</p>
           </details>
         </div>
       </section>
 
       <section class="ap-cta">
-        <div class="ap-cta-box">
+        <div class="ap-cta-box rv">
           <h2>¿Dudas con la app o con tu plan?</h2>
-          <a class="ap-btn" href="https://wa.me/5212215755446?text=Hola%2C%20tengo%20una%20duda%20sobre%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">Escríbenos por WhatsApp</a>
+          <a class="ap-btn" href="https://wa.me/5212215755446?text=Hola%2C%20tengo%20una%20duda%20sobre%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">
+            Escríbenos por WhatsApp
+            <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
         </div>
       </section>
     </main>
@@ -212,5 +361,17 @@
       <a href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
       <a href="aviso-legal.html">Aviso legal</a>
     </footer>
+
+    <script>
+      // Hace aparecer cada bloque al llegar a él con el scroll
+      (function () {
+        var items = document.querySelectorAll(".rv");
+        if (!("IntersectionObserver" in window)) { items.forEach(function (el) { el.classList.add("in"); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+        }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
   </body>
 </html>
