@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <base href="/" />
     <title>App Nutre Mente & Cuerpo | Descarga para Android</title>
-    <meta name="description" content="Descarga la app de Nutre Mente & Cuerpo: tu plan de alimentación y tu rutina de entrenamiento siempre a la mano. Consultorio de nutrición y psicología en Puebla." />
+    <meta name="description" content="Descarga la app de Nutre Mente & Cuerpo para Android (iPhone muy pronto): tu plan de alimentación y tu rutina de entrenamiento siempre a la mano. Consultorio de nutrición y psicología en Puebla." />
     <link rel="canonical" href="https://nutrementeycuerpo.github.io/app/" />
     <meta name="theme-color" content="#08418b" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -185,6 +185,44 @@
       .ap-faq p { max-width: 62ch; padding-bottom: 24px; color: var(--muted); font-size: 16px; line-height: 1.7; }
       .ap-faq details[open] p { animation: ap-up .6s var(--ez); }
 
+
+      /* ---------- iPhone ---------- */
+      .ap-ios-pill { display: inline-flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 22px 0 16px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(6px); }
+      .ap-ios-pill svg { width: 22px; height: 22px; }
+      .ap-ios-pill b { display: block; font-size: 15px; }
+      .ap-ios-pill small { display: flex; align-items: center; gap: 6px; font-size: 12px; opacity: .8; }
+      .ap-ios-pill small i, .ap-badge.review i { width: 7px; height: 7px; border-radius: 50%; background: #ffd27a; animation: ap-pulse 1.6s ease-in-out infinite; }
+
+      .ap-plat { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .ap-pcard { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 18px; padding: 34px 30px; border-radius: 28px; background: var(--cream); transition: transform .5s var(--ez), box-shadow .5s var(--ez); }
+      .ap-pcard:hover { transform: translateY(-6px); box-shadow: 0 30px 50px -30px rgba(8,65,139,.45); }
+      .ap-pcard.dark { color: white; background: linear-gradient(150deg, #0a4ea3, var(--forest-deep)); }
+      .ap-pcard-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .ap-pcard .ap-ico { background: var(--forest); }
+      .ap-pcard.dark .ap-ico { background: rgba(255,255,255,.14); }
+      .ap-pcard .ap-ico svg * { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+      .ap-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+      .ap-badge.ok { background: #e3f5ea; color: #1b7a44; }
+      .ap-badge.ok i { width: 7px; height: 7px; border-radius: 50%; background: #2fb36a; }
+      .ap-badge.review { background: rgba(255,210,122,.16); color: #ffd27a; border: 1px solid rgba(255,210,122,.35); }
+      .ap-pcard h3 { font: 500 30px/1.05 var(--display); letter-spacing: -.04em; }
+      .ap-pcard p { color: var(--muted); font-size: 16px; line-height: 1.65; }
+      .ap-pcard.dark p { color: rgba(255,255,255,.75); }
+      .ap-pcard .ap-btn { align-self: flex-start; margin-top: auto; }
+      .ap-pcard:not(.dark) .ap-btn { background: var(--forest); color: white; }
+      .ap-track { list-style: none; display: grid; gap: 0; margin-top: 4px; }
+      .ap-track li { position: relative; display: flex; align-items: center; gap: 12px; padding: 8px 0; font-size: 15px; color: rgba(255,255,255,.6); }
+      .ap-track li::before { content: ""; flex: none; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); box-sizing: border-box; }
+      .ap-track li + li::after { content: ""; position: absolute; left: 6px; top: -10px; width: 2px; height: 20px; background: rgba(255,255,255,.2); }
+      .ap-track li.done { color: white; }
+      .ap-track li.done::before { border-color: #9fe3b4; background: #9fe3b4; }
+      .ap-track li.now { color: white; font-weight: 700; }
+      .ap-track li.now::before { border-color: #ffd27a; background: #ffd27a; box-shadow: 0 0 0 0 rgba(255,210,122,.6); animation: ap-ping-y 1.8s infinite; }
+      @keyframes ap-ping-y { 70% { box-shadow: 0 0 0 9px rgba(255,210,122,0); } 100% { box-shadow: 0 0 0 0 rgba(255,210,122,0); } }
+      .ap-scan { height: 6px; border-radius: 99px; background: rgba(255,255,255,.14); overflow: hidden; }
+      .ap-scan i { display: block; width: 35%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, transparent, #ffd27a, transparent); animation: ap-scan 2.2s ease-in-out infinite; }
+      @keyframes ap-scan { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+
       .ap-cta { max-width: 1100px; margin: 80px auto 0; padding: 0 5vw 100px; }
       .ap-cta-box { position: relative; overflow: hidden; padding: 64px 6vw; border-radius: 36px; color: white; background: linear-gradient(135deg, #0a4ea3, var(--forest-deep)); display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
       .ap-cta-box::before, .ap-cta-box::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.18); pointer-events: none; }
@@ -205,6 +243,7 @@
         .ap-chip.c2 { right: -30%; }
         .ap-chip.c3 { display: none; }
         .ap-feats { grid-template-columns: 1fr; }
+        .ap-plat { grid-template-columns: 1fr; }
         .ap-steps { grid-template-columns: 1fr 1fr; }
         .ap-marquee { margin-top: 120px; }
       }
@@ -223,8 +262,8 @@
       }
     </style>
   </head>
-  <!-- Mientras no exista el APK, deja la clase "is-soon" en <body>. Cuando subas el APK a GitHub Releases
-       con el nombre nutre-mente-y-cuerpo.apk, quita "is-soon" y los botones de descarga se activan solos. -->
+  <!-- Android: el botón descarga siempre el APK más reciente de GitHub Releases (archivo nutrementeycuerpo.apk).
+       iPhone: cuando Apple apruebe la app, cambia los textos "En revisión" por el enlace de la App Store. -->
   <body class="">
     <section class="ap-hero">
       <div class="ap-blob b1" aria-hidden="true"></div>
@@ -239,7 +278,7 @@
       </header>
       <div class="ap-hero-in">
         <div class="ap-hero-copy">
-          <div class="ap-kicker ap-in" style="--d:100"><i></i>App oficial · Android</div>
+          <div class="ap-kicker ap-in" style="--d:100"><i></i>App oficial · Android y iPhone</div>
           <h1>
             <span class="ln"><span style="--d:220">Tu plan,</span></span>
             <span class="ln"><span class="soft" style="--d:340">siempre en tu</span></span>
@@ -256,6 +295,7 @@
             </a>
             <span class="ap-meta ap-file">Archivo APK · Para teléfonos Android</span>
             <span class="ap-soon-tag ap-soon"><i></i>Disponible muy pronto</span>
+            <a class="ap-ios-pill" href="app/#plataformas"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M10.5 5.5h3M11 18.5h2" /></svg><span><b>iPhone</b><small><i></i>En revisión de Apple</small></span></a>
             <a class="ap-btn ap-btn-ghost ap-soon" href="https://wa.me/5212215755446?text=Hola%2C%20quiero%20que%20me%20avisen%20cuando%20est%C3%A9%20lista%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">
               Avísame por WhatsApp
               <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -313,6 +353,43 @@
         </div>
       </section>
 
+      <section class="ap-sec" id="plataformas">
+        <div class="ap-eyebrow rv">Android y iPhone</div>
+        <h2 class="rv" style="--d:80">Elige <span>tu teléfono.</span></h2>
+        <div class="ap-plat">
+          <article class="ap-pcard rv" style="--d:0">
+            <div class="ap-pcard-top">
+              <div class="ap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M12 7v7M9 11l3 3 3-3" /></svg></div>
+              <span class="ap-badge ok"><i></i>Disponible</span>
+            </div>
+            <h3>Android</h3>
+            <p>Descarga la app directamente desde esta página e instálala en minutos.</p>
+            <a class="ap-btn" href="https://github.com/nutrementeycuerpo/nutrementeycuerpo.github.io/releases/latest/download/nutrementeycuerpo.apk" download>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+              Descargar APK
+            </a>
+          </article>
+          <article class="ap-pcard dark rv" style="--d:150">
+            <div class="ap-pcard-top">
+              <div class="ap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M10.5 5.5h3M11 18.5h2" /></svg></div>
+              <span class="ap-badge review"><i></i>En revisión de Apple</span>
+            </div>
+            <h3>iPhone</h3>
+            <p>Nuestra app para iPhone ya está en revisión de Apple. Muy pronto podrás descargarla desde la App Store.</p>
+            <ol class="ap-track" aria-label="Estado de la app para iPhone">
+              <li class="done">Enviada a Apple</li>
+              <li class="now">En revisión</li>
+              <li>Disponible en la App Store</li>
+            </ol>
+            <div class="ap-scan" aria-hidden="true"><i></i></div>
+            <a class="ap-btn" href="https://wa.me/5212215755446?text=Hola%2C%20quiero%20que%20me%20avisen%20cuando%20est%C3%A9%20lista%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo%20para%20iPhone" target="_blank" rel="noreferrer">
+              Avísame cuando salga
+              <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </article>
+        </div>
+      </section>
+
       <section class="ap-sec">
         <div class="ap-eyebrow rv">En menos de un minuto</div>
         <h2 class="rv" style="--d:80">Cómo instalarla <span>en tu Android.</span></h2>
@@ -334,7 +411,7 @@
           </details>
           <details>
             <summary>¿Funciona en iPhone?<i aria-hidden="true"></i></summary>
-            <p>Esta descarga es solo para teléfonos Android. Si tienes iPhone, escríbenos por WhatsApp y te contamos cómo llevar tu seguimiento.</p>
+            <p>Sí, muy pronto. La app para iPhone ya está en revisión de Apple y estará en la App Store en cuanto la aprueben. Si quieres, escríbenos por WhatsApp y te avisamos cuando salga.</p>
           </details>
           <details>
             <summary>¿Necesito ser paciente del consultorio?<i aria-hidden="true"></i></summary>
