@@ -193,7 +193,7 @@
       .ap-ios-pill small { display: flex; align-items: center; gap: 6px; font-size: 12px; opacity: .8; }
       .ap-ios-pill small i, .ap-badge.review i { width: 7px; height: 7px; border-radius: 50%; background: #ffd27a; animation: ap-pulse 1.6s ease-in-out infinite; }
 
-      .ap-plat { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .ap-plat { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
       .ap-pcard { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 18px; padding: 34px 30px; border-radius: 28px; background: var(--cream); transition: transform .5s var(--ez), box-shadow .5s var(--ez); }
       .ap-pcard:hover { transform: translateY(-6px); box-shadow: 0 30px 50px -30px rgba(8,65,139,.45); }
       .ap-pcard.dark { color: white; background: linear-gradient(150deg, #0a4ea3, var(--forest-deep)); }
@@ -278,7 +278,7 @@
       </header>
       <div class="ap-hero-in">
         <div class="ap-hero-copy">
-          <div class="ap-kicker ap-in" style="--d:100"><i></i>App oficial · Android y iPhone</div>
+          <div class="ap-kicker ap-in" style="--d:100"><i></i>App oficial · Android, iPhone y web</div>
           <h1>
             <span class="ln"><span style="--d:220">Tu plan,</span></span>
             <span class="ln"><span class="soft" style="--d:340">siempre en tu</span></span>
@@ -296,6 +296,10 @@
             <span class="ap-meta ap-file">Archivo APK · Para teléfonos Android</span>
             <span class="ap-soon-tag ap-soon"><i></i>Disponible muy pronto</span>
             <a class="ap-ios-pill" href="app/#plataformas"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M10.5 5.5h3M11 18.5h2" /></svg><span><b>iPhone</b><small><i></i>En revisión de Apple</small></span></a>
+            <a class="ap-btn ap-btn-ghost" href="https://nutri-consultorio.expo.app" target="_blank" rel="noreferrer">
+              Usar en el navegador
+              <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
             <a class="ap-btn ap-btn-ghost ap-soon" href="https://wa.me/5212215755446?text=Hola%2C%20quiero%20que%20me%20avisen%20cuando%20est%C3%A9%20lista%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">
               Avísame por WhatsApp
               <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -354,8 +358,8 @@
       </section>
 
       <section class="ap-sec" id="plataformas">
-        <div class="ap-eyebrow rv">Android y iPhone</div>
-        <h2 class="rv" style="--d:80">Elige <span>tu teléfono.</span></h2>
+        <div class="ap-eyebrow rv">Android, iPhone y web</div>
+        <h2 class="rv" style="--d:80">Elige <span>dónde usarla.</span></h2>
         <div class="ap-plat">
           <article class="ap-pcard rv" style="--d:0">
             <div class="ap-pcard-top">
@@ -387,6 +391,18 @@
               <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
           </article>
+          <article class="ap-pcard rv" style="--d:300">
+            <div class="ap-pcard-top">
+              <div class="ap-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12" rx="2" /><path d="M8 20h8M12 16.5V20" /></svg></div>
+              <span class="ap-badge ok"><i></i>Disponible</span>
+            </div>
+            <h3>En tu navegador</h3>
+            <p>Entra desde la computadora o cualquier teléfono, sin instalar nada. Usa la misma cuenta que en la app.</p>
+            <a class="ap-btn" href="https://nutri-consultorio.expo.app" target="_blank" rel="noreferrer">
+              Entrar
+              <svg class="arr" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </article>
         </div>
       </section>
 
@@ -412,6 +428,10 @@
           <details>
             <summary>¿Funciona en iPhone?<i aria-hidden="true"></i></summary>
             <p>Sí, muy pronto. La app para iPhone ya está en revisión de Apple y estará en la App Store en cuanto la aprueben. Si quieres, escríbenos por WhatsApp y te avisamos cuando salga.</p>
+          </details>
+          <details>
+            <summary>¿Puedo usarla en la computadora?<i aria-hidden="true"></i></summary>
+            <p>Sí. Entra a la versión en el navegador con tu misma cuenta y verás tu plan, tu rutina y tu progreso, sin instalar nada.</p>
           </details>
           <details>
             <summary>¿Necesito ser paciente del consultorio?<i aria-hidden="true"></i></summary>
