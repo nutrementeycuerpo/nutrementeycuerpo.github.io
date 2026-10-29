@@ -82,6 +82,10 @@
         ]
       }
     </script>
+    <style>
+      /* Enlace a la app en la barra superior: también visible en celular */
+      @media (max-width: 620px) { .topbar .top-contact.top-app { display: inline-block; } .topbar-actions { gap: 20px; } }
+    </style>
   </head>
   <body>
     <div class="loader" aria-hidden="true">
@@ -100,6 +104,7 @@
           <span translate="no"><strong>Nutre</strong><small>Mente &amp; Cuerpo</small></span>
         </a>
         <div class="topbar-actions">
+          <a class="top-contact top-app" href="app/">Descarga la app</a>
           <a class="top-contact js-wa" href="#" target="_blank" rel="noreferrer">Agenda una consulta</a>
           <button class="menu-trigger" type="button" aria-expanded="false" aria-label="Abrir menú">
             <span>Menú</span>
