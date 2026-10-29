@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <base href="/" />
+    <title>App Nutre Mente & Cuerpo | Descarga para Android</title>
+    <meta name="description" content="Descarga la app de Nutre Mente & Cuerpo: tu plan de alimentación y tu rutina de entrenamiento siempre a la mano. Consultorio de nutrición y psicología en Puebla." />
+    <link rel="canonical" href="https://nutrementeycuerpo.github.io/app/" />
+    <meta name="theme-color" content="#08418b" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content="App Nutre Mente & Cuerpo" />
+    <meta property="og:description" content="Tu plan de alimentación y tu rutina, siempre en tu bolsillo." />
+    <meta property="og:url" content="https://nutrementeycuerpo.github.io/app/" />
+    <meta property="og:image" content="https://nutrementeycuerpo.github.io/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Quicksand:wght@500;700&display=swap" />
+    <link rel="stylesheet" href="styles.css?v=20261006u" />
+    <style>
+      body { background: var(--paper); }
+      .ap-top { position: relative; z-index: 2; padding: 26px 5vw; display: flex; align-items: center; justify-content: space-between; gap: 16px; color: white; }
+      .ap-top a.back { font-size: 14px; border-bottom: 1px solid rgba(255,255,255,.5); padding-bottom: 3px; }
+
+      /* Hero */
+      .ap-hero { position: relative; overflow: hidden; color: white; background: var(--forest); }
+      .ap-hero::before { content: ""; position: absolute; right: -18vw; top: -10vw; width: 70vw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(255,255,255,.16), rgba(255,255,255,0) 62%); pointer-events: none; }
+      .ap-hero-in { position: relative; max-width: 1200px; margin: 0 auto; padding: 40px 5vw 0; display: grid; grid-template-columns: 1.1fr .9fr; gap: 5vw; align-items: end; }
+      .ap-hero-copy { padding-bottom: 110px; }
+      .ap-kicker { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; opacity: .8; }
+      .ap-hero h1 { margin-top: 22px; font: 500 clamp(46px, 7vw, 96px)/.95 var(--display); letter-spacing: -.055em; }
+      .ap-hero h1 span { display: block; opacity: .62; }
+      .ap-lead { max-width: 46ch; margin-top: 26px; font-size: 18px; line-height: 1.7; opacity: .88; }
+
+      .ap-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+      .ap-btn { display: inline-flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 28px; border-radius: 999px; background: white; color: var(--forest); font-size: 16px; font-weight: 700; transition: transform .3s ease; }
+      .ap-btn:hover { transform: translateY(-2px); }
+      .ap-btn svg { width: 22px; height: 22px; }
+      .ap-btn-ghost { background: transparent; color: white; border: 1px solid rgba(255,255,255,.55); }
+      .ap-meta { font-size: 13px; opacity: .75; }
+      .ap-soon-tag { display: inline-flex; align-items: center; gap: 10px; min-height: 60px; padding: 0 24px; border-radius: 999px; border: 1px dashed rgba(255,255,255,.7); font-size: 15px; font-weight: 700; }
+      .ap-soon-tag i { width: 8px; height: 8px; border-radius: 50%; background: white; animation: ap-pulse 1.6s ease-in-out infinite; }
+      @keyframes ap-pulse { 50% { opacity: .25; } }
+      .ap-soon { display: none; }
+      .is-soon .ap-file { display: none; }
+      .is-soon .ap-soon { display: inline-flex; }
+
+      /* Teléfono */
+      .ap-phone { justify-self: center; width: min(330px, 80vw); aspect-ratio: 9 / 18.5; margin-bottom: -90px; padding: 14px; border-radius: 48px; background: #0b1730; box-shadow: 0 50px 90px -30px rgba(0,0,0,.55); }
+      .ap-screen { height: 100%; border-radius: 36px; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 36px 18px 20px; background: var(--paper); color: var(--ink); }
+      .ap-screen .hdr { display: flex; align-items: center; gap: 10px; color: var(--forest); font: 700 17px/1 var(--display); letter-spacing: -.03em; }
+      .ap-screen .hdr svg { width: 22px; height: 24px; fill: var(--forest); }
+      .ap-screen .hi { margin-top: 4px; font: 500 22px/1.15 var(--display); letter-spacing: -.04em; }
+      .ap-card { border-radius: 18px; padding: 14px; background: white; box-shadow: 0 1px 0 var(--line); }
+      .ap-card small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+      .ap-card strong { display: block; margin-top: 4px; font-size: 14px; }
+      .ap-card.blue { background: var(--forest); color: white; }
+      .ap-card.blue small { color: rgba(255,255,255,.7); }
+      .ap-bar { height: 6px; margin-top: 10px; border-radius: 99px; background: rgba(255,255,255,.25); overflow: hidden; }
+      .ap-bar i { display: block; width: 64%; height: 100%; border-radius: inherit; background: white; }
+
+      /* Secciones */
+      .ap-sec { max-width: 1100px; margin: 0 auto; padding: 160px 5vw 40px; }
+      .ap-sec + .ap-sec { padding-top: 80px; }
+      .ap-sec h2 { max-width: 18ch; font: 500 clamp(34px, 4.6vw, 58px)/1.02 var(--display); letter-spacing: -.05em; color: var(--ink); }
+      .ap-sec h2 span { color: var(--forest); }
+      .ap-feats { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .ap-feat { padding: 30px 26px; border-radius: 26px; background: var(--cream); }
+      .ap-feat b { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--forest); color: white; font: 700 16px var(--display); }
+      .ap-feat h3 { margin-top: 22px; font: 500 22px/1.2 var(--display); letter-spacing: -.03em; color: var(--ink); }
+      .ap-feat p { margin-top: 10px; color: var(--muted); font-size: 16px; line-height: 1.65; }
+
+      .ap-steps { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: s; list-style: none; }
+      .ap-steps li { counter-increment: s; padding-top: 20px; border-top: 2px solid var(--forest); color: var(--ink); font-size: 16px; line-height: 1.6; }
+      .ap-steps li::before { content: "0" counter(s); display: block; margin-bottom: 10px; color: var(--forest); font: 700 14px var(--display); letter-spacing: .08em; }
+
+      .ap-faq { margin-top: 36px; }
+      .ap-faq details { border-top: 1px solid var(--line); padding: 22px 0; }
+      .ap-faq details:last-child { border-bottom: 1px solid var(--line); }
+      .ap-faq summary { cursor: pointer; font: 500 20px/1.3 var(--display); letter-spacing: -.02em; color: var(--ink); }
+      .ap-faq p { margin-top: 12px; max-width: 62ch; color: var(--muted); font-size: 16px; line-height: 1.7; }
+
+      .ap-cta { max-width: 1100px; margin: 80px auto 0; padding: 0 5vw 100px; }
+      .ap-cta-box { padding: 56px 6vw; border-radius: 36px; color: white; background: var(--forest); display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
+      .ap-cta-box h2 { max-width: 16ch; font: 500 clamp(30px, 4vw, 48px)/1.05 var(--display); letter-spacing: -.045em; }
+      .ap-foot { padding: 32px 5vw 48px; text-align: center; font-size: 14px; color: var(--muted); }
+      .ap-foot a { text-decoration: underline; text-underline-offset: 3px; }
+
+      @media (max-width: 900px) {
+        .ap-hero-in { grid-template-columns: 1fr; padding-top: 20px; }
+        .ap-hero-copy { padding-bottom: 40px; }
+        .ap-phone { width: min(260px, 72vw); }
+        .ap-feats { grid-template-columns: 1fr; }
+        .ap-steps { grid-template-columns: 1fr 1fr; }
+        .ap-sec { padding-top: 140px; }
+      }
+      @media (max-width: 560px) {
+        .ap-steps { grid-template-columns: 1fr; }
+        .ap-top a.back { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) { .ap-soon-tag i { animation: none; } .ap-btn { transition: none; } }
+    </style>
+  </head>
+  <!-- Mientras no exista el APK, deja la clase "is-soon" en <body>. Cuando subas el APK a GitHub Releases
+       con el nombre nutre-mente-y-cuerpo.apk, quita "is-soon" y los botones de descarga se activan solos. -->
+  <body class="is-soon">
+    <section class="ap-hero">
+      <header class="ap-top">
+        <a class="brand brand-light" href="./" aria-label="Nutre Mente & Cuerpo, inicio">
+          <svg aria-hidden="true" class="mark" viewBox="-0.5 0 265.9 295.4"><path d="M265.4,250.5c-9.2,10.7-21.2,15.6-34.9,18.4c-32.8,6.8-65.4,14.8-98.2,21.7c-10.9,2.2-21.9,3.6-32.9,4.2c-10.1,0.6-17-4.6-18.6-12.2c-1.6-7.9,3-16.1,13.2-18.7c16.8-4.3,34-7,51-10.6c25.8-5.4,51.4-11.5,77.2-16.2c15-2.8,29.9-0.7,43.1,8L265.4,250.5z M56.4,0c-11.1,6.7-20,15.6-24.1,27.9c-10.6,31.8-20.7,63.8-30.4,96c-1.9,6.3-2.4,13-1.5,19.5c0.6,4.3,4.3,10.3,7.8,11.3c4.1,1.1,9.9-1.8,14.2-4.2c2.5-1.4,4.1-5.1,5.4-8.1c14.8-35.8,29.3-71.7,35.6-110.1C65.1,22,61.3,10.8,60,0H56.4z M175.2,87.6c-28.9,18.3-58.2,35.8-81.7,61.4c-5.6,6.1-12.9,10.7-19,16.4c-5.4,5.1-11,10.2-15.2,16.3c-3.8,5.4-4,12.1,1.4,17.3c5.1,4.9,11.3,4.4,16.7,1.1c11.5-7,23.4-13.7,33.7-22.2c20.5-17.1,40.1-35.2,59.9-53c7.8-7,15.6-14.1,23.1-21.4c5.8-5.7,10.5-12.2,9.6-21.6C193,79.2,183.7,82.2,175.2,87.6z" /></svg>
+          <span translate="no"><strong>Nutre</strong><small>Mente &amp; Cuerpo</small></span>
+        </a>
+        <a class="back" href="./">Ir al consultorio</a>
+      </header>
+      <div class="ap-hero-in">
+        <div class="ap-hero-copy">
+          <div class="ap-kicker">App oficial · Android</div>
+          <h1>Tu plan, <span>siempre en tu bolsillo.</span></h1>
+          <p class="ap-lead">
+            Lleva contigo tu plan de alimentación y tu rutina de entrenamiento de Nutre Mente &amp; Cuerpo,
+            con seguimiento entre consulta y consulta.
+          </p>
+          <div class="ap-actions">
+            <a class="ap-btn ap-file" href="https://github.com/nutrementeycuerpo/nutrementeycuerpo.github.io/releases/latest/download/nutre-mente-y-cuerpo.apk" download>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+              Descargar para Android
+            </a>
+            <span class="ap-meta ap-file">Archivo APK · Para teléfonos Android</span>
+            <span class="ap-soon-tag ap-soon"><i></i>Disponible muy pronto</span>
+            <a class="ap-btn ap-btn-ghost ap-soon" href="https://wa.me/5212215755446?text=Hola%2C%20quiero%20que%20me%20avisen%20cuando%20est%C3%A9%20lista%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">Avísame por WhatsApp</a>
+          </div>
+        </div>
+        <div class="ap-phone" aria-hidden="true">
+          <div class="ap-screen">
+            <div class="hdr"><svg viewBox="-0.5 0 265.9 295.4"><path d="M265.4,250.5c-9.2,10.7-21.2,15.6-34.9,18.4c-32.8,6.8-65.4,14.8-98.2,21.7c-10.9,2.2-21.9,3.6-32.9,4.2c-10.1,0.6-17-4.6-18.6-12.2c-1.6-7.9,3-16.1,13.2-18.7c16.8-4.3,34-7,51-10.6c25.8-5.4,51.4-11.5,77.2-16.2c15-2.8,29.9-0.7,43.1,8L265.4,250.5z M56.4,0c-11.1,6.7-20,15.6-24.1,27.9c-10.6,31.8-20.7,63.8-30.4,96c-1.9,6.3-2.4,13-1.5,19.5c0.6,4.3,4.3,10.3,7.8,11.3c4.1,1.1,9.9-1.8,14.2-4.2c2.5-1.4,4.1-5.1,5.4-8.1c14.8-35.8,29.3-71.7,35.6-110.1C65.1,22,61.3,10.8,60,0H56.4z M175.2,87.6c-28.9,18.3-58.2,35.8-81.7,61.4c-5.6,6.1-12.9,10.7-19,16.4c-5.4,5.1-11,10.2-15.2,16.3c-3.8,5.4-4,12.1,1.4,17.3c5.1,4.9,11.3,4.4,16.7,1.1c11.5-7,23.4-13.7,33.7-22.2c20.5-17.1,40.1-35.2,59.9-53c7.8-7,15.6-14.1,23.1-21.4c5.8-5.7,10.5-12.2,9.6-21.6C193,79.2,183.7,82.2,175.2,87.6z" /></svg>Nutre</div>
+            <div class="hi">Hola, este es tu plan de hoy</div>
+            <div class="ap-card blue"><small>Tu avance del día</small><strong>4 de 6 comidas</strong><div class="ap-bar"><i></i></div></div>
+            <div class="ap-card"><small>Comida</small><strong>Tu plan de alimentación</strong></div>
+            <div class="ap-card"><small>Entrenamiento</small><strong>Tu rutina de hoy</strong></div>
+            <div class="ap-card"><small>Próxima consulta</small><strong>Tu seguimiento</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="ap-sec">
+        <h2>Todo tu proceso, <span>en un solo lugar.</span></h2>
+        <div class="ap-feats">
+          <article class="ap-feat">
+            <b>01</b>
+            <h3>Tu plan de alimentación</h3>
+            <p>Consulta qué te toca comer cada día, pensado para tu historia, tus gustos y tu ritmo de vida.</p>
+          </article>
+          <article class="ap-feat">
+            <b>02</b>
+            <h3>Tu rutina de entrenamiento</h3>
+            <p>Ten a la mano los ejercicios de tu plan para entrenar con claridad, en casa o en el gimnasio.</p>
+          </article>
+          <article class="ap-feat">
+            <b>03</b>
+            <h3>Siempre al día</h3>
+            <p>Tu plan se actualiza con tu proceso, para que nunca te quedes sin guía entre consultas.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="ap-sec">
+        <h2>Cómo instalarla <span>en tu Android.</span></h2>
+        <ol class="ap-steps">
+          <li>Desde tu teléfono, toca “Descargar para Android”.</li>
+          <li>Abre el archivo descargado desde tus notificaciones o la carpeta Descargas.</li>
+          <li>Si tu teléfono lo pide, permite instalar apps de esta fuente y toca “Instalar”.</li>
+          <li>Abre la app, crea tu cuenta y contesta tu cuestionario.</li>
+        </ol>
+      </section>
+
+      <section class="ap-sec">
+        <h2>Preguntas <span>sobre la app.</span></h2>
+        <div class="ap-faq">
+          <details>
+            <summary>¿Por qué se descarga desde aquí y no desde Google Play?</summary>
+            <p>Por ahora la app se instala con un archivo APK directamente desde esta página. Es nuestra app oficial; solo descárgala desde este sitio.</p>
+          </details>
+          <details>
+            <summary>¿Funciona en iPhone?</summary>
+            <p>Esta descarga es solo para teléfonos Android. Si tienes iPhone, escríbenos por WhatsApp y te contamos cómo llevar tu seguimiento.</p>
+          </details>
+          <details>
+            <summary>¿Necesito ser paciente del consultorio?</summary>
+            <p>La app está pensada para acompañar tu proceso de nutrición con nosotros. Si aún no eres paciente, escríbenos y te ayudamos a agendar tu primera consulta.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="ap-cta">
+        <div class="ap-cta-box">
+          <h2>¿Dudas con la app o con tu plan?</h2>
+          <a class="ap-btn" href="https://wa.me/5212215755446?text=Hola%2C%20tengo%20una%20duda%20sobre%20la%20app%20de%20Nutre%20Mente%20%26%20Cuerpo" target="_blank" rel="noreferrer">Escríbenos por WhatsApp</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="ap-foot">
+      © 2026 Nutre Mente &amp; Cuerpo · Puebla, México ·
+      <a href="./">Inicio</a> ·
+      <a href="nutriologo-puebla.html">Nutriólogo en Puebla</a> ·
+      <a href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
+      <a href="aviso-legal.html">Aviso legal</a>
+    </footer>
+  </body>
+</html>
