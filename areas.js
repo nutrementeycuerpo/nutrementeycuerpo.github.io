@@ -47,8 +47,105 @@
       bar.style.setProperty("--p", max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0);
       ticking = false;
     }
-    addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(progress); } }, { passive: true });
+    // ---------- Barra flotante de cristal (aparece al dejar el hero) ----------
+    var hero = document.querySelector(".ar-hero");
+    var topTabs = document.querySelector(".ar-top .area-tabs");
+    var dock = null;
+    if (hero && topTabs) {
+      dock = document.createElement("div");
+      dock.className = "ar-dock";
+      dock.inert = true;
+      var brand = document.querySelector(".ar-top .brand");
+      var cta = document.querySelector(".ar-top-cta");
+      dock.innerHTML =
+        '<a class="dock-brand" href="./" aria-label="Nutre Mente & Cuerpo, inicio">' + brand.querySelector("svg").outerHTML + "Nutre</a>";
+      dock.appendChild(topTabs.cloneNode(true));
+      if (cta) {
+        var c = document.createElement("a");
+        c.className = "dock-cta";
+        c.href = cta.href;
+        c.target = "_blank";
+        c.rel = "noreferrer";
+        c.textContent = "Agendar";
+        dock.appendChild(c);
+      }
+      document.body.appendChild(dock);
+    }
+
+    // ---------- Frase que se ilumina palabra por palabra ----------
+    var statement = document.querySelector(".ar-statement p");
+    var words = [];
+    if (statement) {
+      (function split(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+              var w = document.createElement("span");
+              w.className = "w";
+              w.textContent = part;
+              frag.appendChild(w);
+              words.push(w);
+            });
+            n.parentNode.replaceChild(frag, n);
+          } else if (n.nodeType === 1) split(n);
+        });
+      })(statement);
+    }
+
+    var personImgs = Array.prototype.slice.call(document.querySelectorAll(".ar-person-img"));
+
+    function onScroll() {
+      var vh = innerHeight;
+      // Profundidad del hero: el contenido se aleja al bajar
+      if (hero && !reduceMotion) {
+        var hh = hero.offsetHeight;
+        hero.style.setProperty("--hp", Math.max(0, Math.min(1, scrollY / hh)).toFixed(3));
+      }
+      if (dock) {
+        var show = scrollY > hero.offsetHeight - 80;
+        if (show !== dock.classList.contains("show")) {
+          dock.classList.toggle("show", show);
+          dock.inert = !show;
+          if (show) window.dispatchEvent(new Event("resize")); // coloca la píldora ya visible
+        }
+      }
+      if (words.length) {
+        var r = statement.getBoundingClientRect();
+        var p = (vh * 0.85 - r.top) / (r.height + vh * 0.35);
+        var lit = Math.round(Math.max(0, Math.min(1, p)) * words.length);
+        for (var i = 0; i < words.length; i++) words[i].classList.toggle("lit", i < lit);
+      }
+      if (!reduceMotion) {
+        personImgs.forEach(function (box) {
+          var b = box.getBoundingClientRect();
+          if (b.bottom < 0 || b.top > vh) return;
+          var t = (b.top + b.height / 2 - vh / 2) / vh; // -1..1
+          box.style.setProperty("--pp", (t * -28).toFixed(1));
+        });
+      }
+    }
+    var sTick = false;
+    addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(progress); }
+      if (!sTick) { sTick = true; requestAnimationFrame(function () { sTick = false; onScroll(); }); }
+    }, { passive: true });
+    addEventListener("resize", onScroll);
     progress();
+    onScroll();
+
+    // Brillo de las tarjetas siguiendo el cursor
+    if (finePointer) {
+      document.querySelectorAll(".ar-card").forEach(function (card) {
+        card.addEventListener("pointermove", function (e) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+          card.style.setProperty("--my", (e.clientY - r.top) + "px");
+        });
+      });
+    }
   }
 
   // ---------- Pestañas con píldora deslizante ----------
