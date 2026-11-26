@@ -564,19 +564,19 @@ if (cursor && finePointer && !reduceMotion) {
 (() => {
   const KEY = "nutre-cookies"; // "si" | "no"
   const banner = document.querySelector(".cookie-banner");
-  const map = document.querySelector(".contact-map iframe");
-  const blocked = document.querySelector(".map-blocked");
+  const maps = document.querySelectorAll(".contact-map iframe");
+  const blockedAll = document.querySelectorAll(".map-blocked");
   const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
   const save = (v) => { try { localStorage.setItem(KEY, v); } catch {} };
 
   function apply(choice) {
     const ok = choice === "si";
-    if (map) {
+    maps.forEach((map) => {
       if (ok && !map.src) map.src = map.dataset.src;
       if (!ok && map.src) map.removeAttribute("src");
       map.hidden = !ok;
-    }
-    if (blocked) blocked.hidden = ok;
+    });
+    blockedAll.forEach((blocked) => (blocked.hidden = ok));
   }
   function show() {
     if (!banner) return;

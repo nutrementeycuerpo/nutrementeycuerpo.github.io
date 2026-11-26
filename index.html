@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Quicksand:wght@500;700&family=Instrument+Serif:ital@1&display=swap" />
     <link rel="stylesheet" href="styles.css?v=20261006u" />
-    <link rel="stylesheet" href="areas.css?v=20261126i" />
+    <link rel="stylesheet" href="areas.css?v=20261126j" />
     <script>
       // Pantalla de carga: solo la primera vez por visita y si no se pidió reducir movimiento
       (function () {
@@ -467,29 +467,58 @@
               <a class="chip chip-ambas js-wa" data-wa-msg="Hola, me interesa llevar psicología y nutrición al mismo tiempo" href="#" target="_blank" rel="noreferrer">Psicología y nutrición juntas</a>
             </div>
           </div>
-          <div class="contact-map reveal">
-            <!-- El mapa de Google pone cookies: solo se carga si la persona las acepta (ver main.js) -->
-            <iframe
-              title="Ubicación de Nutre Mente & Cuerpo"
-              data-src="https://www.google.com/maps?q=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue.&amp;output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              hidden
-            ></iframe>
-            <div class="map-blocked">
-              <p>El mapa de Google usa cookies. Puedes activarlo o abrir la ubicación directo en Google Maps.</p>
-              <div class="map-blocked-actions">
-                <button class="chip chip-cuerpo js-cookie-accept" type="button">Activar mapa</button>
-                <a class="chip chip-ambas" href="https://www.google.com/maps/search/?api=1&query=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue." target="_blank" rel="noreferrer">Abrir en Google Maps</a>
+          <!-- Los mapas de Google ponen cookies: solo se cargan si la persona las acepta (ver main.js) -->
+          <div class="contact-maps">
+            <article class="map-card is-main reveal" style="--d:0">
+              <div class="contact-map">
+                <iframe title="Mapa: C. 6 B Sur 2902" data-src="https://www.google.com/maps?q=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue.&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
+                <div class="map-blocked">
+                  <p>El mapa de Google usa cookies.</p>
+                  <div class="map-blocked-actions"><button class="chip chip-cuerpo js-cookie-accept" type="button">Activar mapas</button></div>
+                </div>
               </div>
-            </div>
+              <div class="map-info">
+                <small>Consultorio principal</small>
+                <strong>C. 6 B Sur 2902</strong>
+                <span>Ladrillera de Benítez, 72530 Puebla</span>
+                <a class="map-go" href="https://www.google.com/maps/search/?api=1&amp;query=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue." target="_blank" rel="noreferrer">Cómo llegar <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></a>
+              </div>
+            </article>
+            <article class="map-card reveal" style="--d:120">
+              <div class="contact-map">
+                <iframe title="Mapa: Plaza Dorada" data-src="https://www.google.com/maps?q=Costa+Rica+46%2C+Geovillas+del+Sur%2C+Puebla%2C+Pue.&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
+                <div class="map-blocked">
+                  <p>El mapa de Google usa cookies.</p>
+                  <div class="map-blocked-actions"><button class="chip chip-cuerpo js-cookie-accept" type="button">Activar mapas</button></div>
+                </div>
+              </div>
+              <div class="map-info">
+                <small>Sede</small>
+                <strong>Plaza Dorada</strong>
+                <span>Costa Rica 46, Geovillas del Sur, Puebla</span>
+                <a class="map-go" href="https://maps.app.goo.gl/hZ3XQi5hSb3tW3eY7" target="_blank" rel="noreferrer">Cómo llegar <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></a>
+              </div>
+            </article>
+            <article class="map-card reveal" style="--d:240">
+              <div class="contact-map">
+                <iframe title="Mapa: Sanctorum" data-src="https://www.google.com/maps?q=Av.+Cholula+9%2C+Sanctorum%2C+72730+Puebla%2C+Pue.&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
+                <div class="map-blocked">
+                  <p>El mapa de Google usa cookies.</p>
+                  <div class="map-blocked-actions"><button class="chip chip-cuerpo js-cookie-accept" type="button">Activar mapas</button></div>
+                </div>
+              </div>
+              <div class="map-info">
+                <small>Sede</small>
+                <strong>Sanctorum</strong>
+                <span>Av. Cholula 9, Sanctorum, 72730 Puebla</span>
+                <a class="map-go" href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Cholula+9%2C+Sanctorum%2C+72730+Puebla%2C+Pue." target="_blank" rel="noreferrer">Cómo llegar <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M9 6h9v9" /></svg></a>
+              </div>
+            </article>
           </div>
           <div class="contact-details">
             <a class="footer-logo" href="#inicio" aria-label="Nutre Mente & Cuerpo, inicio">
               <img src="img/logo-nutre-blanco.webp" alt="Nutre Mente & Cuerpo, psicología y nutrición" width="590" height="432" loading="lazy" />
             </a>
-            <div><small>Consultorio principal</small><a href="https://www.google.com/maps/search/?api=1&query=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue." target="_blank" rel="noreferrer"><span>C. 6 B Sur 2902, Ladrillera de Benítez<br />72530 Puebla, Pue.</span></a></div>
-            <div><small>Otras sedes</small><span><a href="https://maps.app.goo.gl/hZ3XQi5hSb3tW3eY7" target="_blank" rel="noreferrer">Plaza Dorada · Costa Rica 46, Geovillas del Sur</a><br /><a href="https://www.google.com/maps/search/?api=1&query=Av.+Cholula+9%2C+Sanctorum%2C+72730+Puebla%2C+Pue." target="_blank" rel="noreferrer">Sanctorum · Av. Cholula 9, 72730</a></span></div>
             <div><small>Llámanos o escríbenos</small><span><a href="tel:+522215755446">221 575 5446</a><br /><a class="js-wa" href="#" target="_blank" rel="noreferrer">Escribir por WhatsApp</a></span></div>
             <!-- PENDIENTE: cuando tengas los horarios, cámbialo por ej. "Lun a Vie · 9:00 – 19:00" -->
             <div><small>Horario</small><span>Atención con cita previa</span></div>
@@ -573,7 +602,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-    <script src="main.js?v=20261006u"></script>
-    <script src="areas.js?v=20261126i"></script>
+    <script src="main.js?v=20261126j"></script>
+    <script src="areas.js?v=20261126j"></script>
     </body>
 </html>
