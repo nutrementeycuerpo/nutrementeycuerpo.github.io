@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Quicksand:wght@500;700&family=Instrument+Serif:ital@1&display=swap" />
     <link rel="stylesheet" href="styles.css?v=20261006u" />
-    <link rel="stylesheet" href="areas.css?v=20261126g" />
+    <link rel="stylesheet" href="areas.css?v=20261126h" />
     <script>
       // Pantalla de carga: solo la primera vez por visita y si no se pidió reducir movimiento
       (function () {
@@ -47,13 +47,9 @@
         "url": "https://nutrementeycuerpo.github.io/",
         "email": "nutrementeycuerpomx@gmail.com",
         "telephone": "+52 221 575 5446",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Costa Rica 46, Geovillas del Sur",
-          "addressLocality": "Puebla",
-          "addressRegion": "Puebla",
-          "addressCountry": "MX"
-        },
+        "address": { "@type": "PostalAddress", "streetAddress": "C. 6 B Sur 2902, Ladrillera de Benítez", "postalCode": "72530", "addressLocality": "Heroica Puebla de Zaragoza", "addressRegion": "Puebla", "addressCountry": "MX" },
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue.",
+        "location": [{ "@type": "Place", "name": "Nutre Mente & Cuerpo · Plaza Dorada", "address": { "@type": "PostalAddress", "streetAddress": "Costa Rica 46, Plaza Dorada, Geovillas del Sur", "addressLocality": "Puebla", "addressRegion": "Puebla", "addressCountry": "MX" } }],
         "medicalSpecialty": "DietNutrition",
         "knowsAbout": ["Psicología", "Terapia cognitivo conductual", "Ansiedad", "Depresión", "Nutrición clínica", "Control de peso", "Nutrición deportiva"],
         "sameAs": [
@@ -475,7 +471,7 @@
             <!-- El mapa de Google pone cookies: solo se carga si la persona las acepta (ver main.js) -->
             <iframe
               title="Ubicación de Nutre Mente & Cuerpo"
-              data-src="https://www.google.com/maps?q=Costa+Rica+46,+Geovillas+del+Sur,+Puebla,+Pue.&output=embed"
+              data-src="https://www.google.com/maps?q=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue.&amp;output=embed"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
               hidden
@@ -484,7 +480,7 @@
               <p>El mapa de Google usa cookies. Puedes activarlo o abrir la ubicación directo en Google Maps.</p>
               <div class="map-blocked-actions">
                 <button class="chip chip-cuerpo js-cookie-accept" type="button">Activar mapa</button>
-                <a class="chip chip-ambas" href="https://maps.app.goo.gl/hZ3XQi5hSb3tW3eY7" target="_blank" rel="noreferrer">Abrir en Google Maps</a>
+                <a class="chip chip-ambas" href="https://www.google.com/maps/search/?api=1&query=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue." target="_blank" rel="noreferrer">Abrir en Google Maps</a>
               </div>
             </div>
           </div>
@@ -492,7 +488,8 @@
             <a class="footer-logo" href="#inicio" aria-label="Nutre Mente & Cuerpo, inicio">
               <img src="img/logo-nutre-blanco.webp" alt="Nutre Mente & Cuerpo, psicología y nutrición" width="590" height="432" loading="lazy" />
             </a>
-            <div><small>Visítanos</small><a href="https://maps.app.goo.gl/hZ3XQi5hSb3tW3eY7" target="_blank" rel="noreferrer"><span>Plaza Dorada<br />Costa Rica 46, Geovillas del Sur, Puebla</span></a></div>
+            <div><small>Consultorio principal</small><a href="https://www.google.com/maps/search/?api=1&query=C.+6+B+Sur+2902%2C+Ladrillera+de+Ben%C3%ADtez%2C+72530+Puebla%2C+Pue." target="_blank" rel="noreferrer"><span>C. 6 B Sur 2902, Ladrillera de Benítez<br />72530 Puebla, Pue.</span></a></div>
+            <div><small>También en</small><a href="https://maps.app.goo.gl/hZ3XQi5hSb3tW3eY7" target="_blank" rel="noreferrer"><span>Plaza Dorada<br />Costa Rica 46, Geovillas del Sur, Puebla</span></a></div>
             <div><small>Llámanos o escríbenos</small><span><a href="tel:+522215755446">221 575 5446</a><br /><a class="js-wa" href="#" target="_blank" rel="noreferrer">Escribir por WhatsApp</a></span></div>
             <!-- PENDIENTE: cuando tengas los horarios, cámbialo por ej. "Lun a Vie · 9:00 – 19:00" -->
             <div><small>Horario</small><span>Atención con cita previa</span></div>
@@ -577,6 +574,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="main.js?v=20261006u"></script>
-    <script src="areas.js?v=20261126g"></script>
+    <script src="areas.js?v=20261126h"></script>
     </body>
 </html>
