@@ -17,8 +17,6 @@
 
   // ---------- Páginas de área ----------
   if (isAreaPage) {
-    // Quien ya eligió un área no vuelve a ver la bienvenida al ir a "Todos"
-    try { sessionStorage.setItem("nutre-area", "1"); } catch (e) {}
 
     document.querySelectorAll(".js-wa").forEach(function (link) {
       var msg = link.getAttribute("data-wa-msg") || "Hola, quiero agendar una consulta";
@@ -214,7 +212,8 @@
     var r = a.getBoundingClientRect();
     var x = e.clientX || r.left + r.width / 2;
     var y = e.clientY || r.top + r.height / 2;
-    try { sessionStorage.setItem("nutre-area", "1"); } catch (err) {}
+    // Al volver al inicio desde un área con "Todos", no se pregunta otra vez
+    if (area === "todos") { try { sessionStorage.setItem("nutre-skip-gate", "1"); } catch (err) {} }
     goTo(a.href, area, x, y);
   });
 
@@ -257,19 +256,16 @@
     });
   }
 
-  var KEY = "nutre-area";
-  var params = new URLSearchParams(location.search);
-  var seen = false;
-  try { seen = !!sessionStorage.getItem(KEY); } catch (e) {}
-  // Se muestra una vez por visita; ?elegir la vuelve a abrir. Con un #ancla se entra directo.
-  var force = params.has("elegir");
-  if ((seen || location.hash) && !force) return;
+  // Se muestra cada vez que se carga o recarga el inicio.
+  // Excepciones: al volver desde un área con "Todos" (una sola vez) o al entrar con un #ancla.
+  var skip = false;
+  try { skip = !!sessionStorage.getItem("nutre-skip-gate"); sessionStorage.removeItem("nutre-skip-gate"); } catch (e) {}
+  var force = new URLSearchParams(location.search).has("elegir");
+  if ((skip || location.hash) && !force) return;
 
   var root = document.documentElement;
   var backdrop = Array.prototype.slice.call(document.querySelectorAll("main, .topbar, .wa-float"));
   var lastFocus = null;
-
-  function remember() { try { sessionStorage.setItem(KEY, "1"); } catch (e) {} }
 
   function open() {
     lastFocus = document.activeElement;
@@ -282,7 +278,6 @@
   }
 
   function close() {
-    remember();
     gate.classList.add("closing");
     backdrop.forEach(function (el) { el.inert = false; });
     setTimeout(function () {
