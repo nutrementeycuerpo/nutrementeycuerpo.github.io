@@ -455,3 +455,74 @@ html:not(.js) .ar-statement .w { color: var(--ink); }
 .ar-person-img img { top: -30px; height: calc(100% + 60px); }
 .ar-sec.bg-mesh { padding-bottom: clamp(80px, 8vw, 140px); }
 .ar-sec.bg-mesh::before { -webkit-mask-image: linear-gradient(#000 65%, transparent); mask-image: linear-gradient(#000 65%, transparent); }
+
+/* =========================================================
+   Paleta unificada en todo el sitio
+   Mente / Psicología = rosa · Cuerpo / Nutrición = verde · Azul = marca y "Todos"
+   (el inicio usa estos tonos pastel con texto oscuro encima; el vidrio WebGL
+   del hero también los lee)
+   ========================================================= */
+:root {
+  --mente: #ffcadf;
+  --mente-soft: #ffe8f1;
+  --mente-deep: #f08bb4;
+  --cuerpo: #bdf0d2;
+  --cuerpo-soft: #e5f8ec;
+  --cuerpo-deep: #5fcf94;
+  --sage: var(--mente);
+}
+.hv-word-mente, .hv-sub-mente { fill: var(--c-psi); }
+.hv-word-cuerpo, .hv-sub-cuerpo { fill: var(--c-nutri); }
+.tone-cuerpo, .story[data-tone="cuerpo"] .story-visual, .bento-claridad, .fusion-body { box-shadow: none; }
+
+/* =========================================================
+   Cursiva editorial: una palabra clave por título
+   ========================================================= */
+.serif { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: 1.1em; line-height: 0; letter-spacing: -.015em; }
+.ar-statement em .w { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; font-size: 1.1em; letter-spacing: -.015em; }
+.area-gate h2 .serif { padding-right: .06em; }
+
+/* =========================================================
+   Inicio: mismo lenguaje de cristal y auroras que las áreas
+   ========================================================= */
+/* Pestañas sobre la barra oscura (al bajar o con el menú abierto) */
+.topbar.is-floating .area-tabs, body.menu-open .topbar .area-tabs { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.22); box-shadow: none; }
+.topbar.is-floating .area-tabs a, body.menu-open .topbar .area-tabs a { color: rgba(255,255,255,.88); }
+.topbar.is-floating .area-pill, body.menu-open .topbar .area-pill { background: white; }
+.topbar.is-floating .has-pill a.is-on, body.menu-open .topbar .has-pill a.is-on { color: var(--tc); }
+
+/* Servicios: brillo de vidrio en los paneles y flecha del color de su área */
+.hs-panel { background-image: radial-gradient(70% 55% at 88% 0%, rgba(255,255,255,.6), transparent 60%), radial-gradient(60% 50% at 0% 100%, rgba(255,255,255,.25), transparent 60%); }
+.tone-mente .hs-cta i { background: var(--c-psi); color: white; }
+.tone-cuerpo .hs-cta i, .tone-cuerpo-2 .hs-cta i { background: var(--c-nutri); color: white; }
+
+/* Principios: la tarjeta oscura con resplandor rosa y verde */
+.bento-ciencia { background-image: radial-gradient(60% 55% at 15% 10%, color-mix(in srgb, var(--mente) 28%, transparent), transparent 70%), radial-gradient(55% 55% at 95% 100%, color-mix(in srgb, var(--cuerpo) 24%, transparent), transparent 70%); }
+
+/* Preguntas: malla de color suave */
+.faq { position: relative; isolation: isolate; }
+.faq::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(45% 55% at 6% 20%, color-mix(in srgb, var(--mente) 75%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 98% 85%, color-mix(in srgb, var(--cuerpo) 85%, transparent), transparent 70%),
+    radial-gradient(35% 40% at 55% 0%, rgba(255,255,255,.7), transparent 70%); }
+.faq-item summary i { transition: background .4s var(--ez), color .4s var(--ez), border-color .4s var(--ez); }
+.faq-item[open] summary i { background: var(--forest); color: white; border-color: var(--forest); }
+
+/* Contacto: auroras rosa y verde detrás del cobalto, con grano fino */
+.contact { position: relative; isolation: isolate; }
+.contact::before, .contact::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; filter: blur(90px); opacity: .38; }
+.contact::before { width: 52vw; height: 52vw; right: -16vw; top: -18vw; background: var(--mente-deep); animation: home-drift 22s ease-in-out infinite alternate; }
+.contact::after { width: 46vw; height: 46vw; left: -18vw; top: 30%; background: var(--cuerpo-deep); opacity: .3; animation: home-drift 26s ease-in-out infinite alternate-reverse; }
+@keyframes home-drift { to { transform: translate(-4vw, 5vw) scale(1.08); } }
+.contact .quick { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+
+/* Manifiesto y fusión: un toque de grano para que el cobalto no se vea plano */
+.manifesto, .fusion-core { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .contact::before, .contact::after { animation: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .contact .quick { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255,255,255,.12); }
+}
